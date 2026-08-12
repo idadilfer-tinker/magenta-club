@@ -1,0 +1,1080 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Magenta Club — Design firepower for AI-led start ups and scale ups</title>
+<meta name="description" content="A craft-led studio of senior PMs and PDs. Hiring slows you down. We speed you up." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════ TOKENS ═══════════════════ */
+:root{
+  --bg:#ffffff; --bg-subtle:#fafafa; --bg-card:#f4f4f5; --bg-inverse:#0b0b0c;
+  --fg:#09090b; --fg-muted:#71717a; --fg-inverse:#ffffff;
+  --border:#e4e4e7; --border-strong:#d4d4d8;
+  --accent:#ff18c2;
+  --r-md:12px; --r-lg:16px; --r-xl:24px; --r-pill:999px;
+  --container:1200px; --pad:24px; --section:clamp(80px,10vw,140px);
+}
+[data-theme="dark"]{
+  --bg:#0b0b0c; --bg-subtle:#121213; --bg-card:#18181b; --bg-inverse:#ffffff;
+  --fg:#fafafa; --fg-muted:#a1a1aa; --fg-inverse:#0b0b0c;
+  --border:#27272a; --border-strong:#3f3f46;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:16px;line-height:1.55;letter-spacing:-0.011em;
+  -webkit-font-smoothing:antialiased;transition:background .2s,color .2s;
+}
+a{color:inherit;text-decoration:none}
+svg{display:block}
+.wrap{max-width:var(--container);margin:0 auto;padding:0 var(--pad)}
+.section{padding:var(--section) 0}
+hr.rule{border:0;border-top:1px solid var(--border)}
+h1,h2,h3{font-weight:500;letter-spacing:-0.032em;line-height:1.06}
+h1{font-size:clamp(42px,5.6vw,68px)}
+h2{font-size:clamp(32px,4vw,50px)}
+h3{font-size:19px;letter-spacing:-0.02em;line-height:1.25}
+.lead{font-size:18px;color:var(--fg-muted);line-height:1.6}
+.muted{color:var(--fg-muted)}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.2,.6,.3,1),transform .7s cubic-bezier(.2,.6,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:500;
+  font-family:inherit;padding:12px 24px;border-radius:var(--r-pill);
+  border:1px solid transparent;cursor:pointer;transition:opacity .18s,border-color .18s}
+.btn-primary{background:var(--bg-inverse);color:var(--fg-inverse)}
+.btn-primary:hover{opacity:.85}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--border-strong)}
+.btn-ghost:hover{border-color:var(--fg)}
+.btn-sm{padding:9px 19px;font-size:13px}
+.btn .arw{transition:transform .18s}
+.btn:hover .arw{transform:translateX(3px)}
+
+/* ═══════════════════ HEADER ═══════════════════ */
+header{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--border);
+  background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(12px)}
+.nav{max-width:var(--container);margin:0 auto;padding:0 var(--pad);height:62px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;letter-spacing:-0.02em}
+.mark-canvas{
+  width:26px;height:26px;flex-shrink:0;border-radius:7px;
+  background:var(--bg-card);border:1px solid var(--border);
+  image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:crisp-edges;
+}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-size:14px;color:var(--fg-muted)}
+.nav-links a:hover{color:var(--fg)}
+.nav-right{display:flex;align-items:center;gap:11px}
+.theme-toggle{width:32px;height:32px;border-radius:var(--r-pill);border:1px solid var(--border);
+  background:transparent;color:var(--fg);cursor:pointer;display:grid;place-items:center}
+.theme-toggle:hover{border-color:var(--border-strong)}
+
+/* ═══════════════════ HERO ═══════════════════ */
+.hero{padding:clamp(52px,6vw,88px) 0 clamp(44px,5vw,72px)}
+.hero-grid{display:grid;grid-template-columns:1fr 1.02fr;gap:clamp(32px,5vw,72px);align-items:center}
+.hero h1{margin-bottom:20px;max-width:13ch}
+.hero .lead{max-width:40ch;margin-bottom:34px}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px}
+.hero-stats{display:flex;gap:56px;flex-wrap:wrap;padding-top:30px;border-top:1px solid var(--border)}
+.stat-n{font-size:36px;font-weight:500;letter-spacing:-0.04em;line-height:1;margin-bottom:7px}
+.stat-l{font-size:13.5px;color:var(--fg-muted);max-width:20ch}
+
+/* gradient artwork */
+.artwork{position:relative;aspect-ratio:1/0.82;border-radius:var(--r-lg);overflow:hidden;background:#12121a;isolation:isolate}
+.artwork span.blob{position:absolute;border-radius:50%;filter:blur(48px);opacity:.95}
+.b1{width:70%;height:70%;left:-10%;top:-8%;background:#ff5d1f}
+.b2{width:62%;height:66%;left:26%;top:-14%;background:#ffb020}
+.b3{width:66%;height:70%;left:44%;top:16%;background:#3ea8ff}
+.b4{width:58%;height:62%;left:8%;top:38%;background:#ff18c2}
+.b5{width:54%;height:58%;left:52%;top:46%;background:#7b5cff}
+.artwork::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.5'/></svg>")}
+/* WebGL flow shader — fills the box opaquely once it boots; blobs above stay as a no-JS/no-WebGL fallback */
+.shader-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+
+/* ═══════════════════ CAROUSEL ═══════════════════ */
+.trusted{padding:30px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
+.trusted-label{font-size:13px;color:var(--fg-muted);text-align:center;margin-bottom:22px}
+.marquee{display:flex;gap:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;align-items:center;gap:64px;padding-right:64px;flex-shrink:0;
+  animation:slide 34s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+.marquee-track span{font-size:20px;font-weight:600;letter-spacing:-0.025em;
+  color:var(--fg-muted);opacity:.5;white-space:nowrap;transition:opacity .2s,color .2s}
+.marquee-track span:hover{opacity:1;color:var(--fg)}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+
+/* ═══════════════════ WHY ═══════════════════ */
+.why-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,5vw,80px);align-items:end}
+.why-grid h2{max-width:13ch}
+.why-body{font-size:19px;line-height:1.55;letter-spacing:-0.015em;max-width:46ch;margin-bottom:28px}
+.why-body em{font-style:normal;color:var(--fg);border-bottom:2px solid var(--accent);padding-bottom:1px}
+
+/* ═══════════════════ WHAT WE DO — stretching cards ═══════════════════ */
+.do-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:start;margin-bottom:52px}
+.deck{display:flex;gap:12px;align-items:stretch;min-height:440px}
+.dcard{
+  position:relative;flex:1 1 0;min-width:0;
+  border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg-subtle);
+  padding:26px 22px;display:flex;flex-direction:column;justify-content:space-between;
+  cursor:pointer;overflow:hidden;
+  transition:flex-grow .55s cubic-bezier(.22,1,.36,1),background .3s,border-color .3s;
+}
+.dcard:hover,.dcard:focus-visible{flex-grow:3.1;background:var(--bg-card);border-color:var(--border-strong);outline:none}
+.dcard .num{font-size:12px;color:var(--fg-muted);letter-spacing:.04em}
+.dcard .art{flex:1;display:grid;place-items:center;padding:16px 0}
+.dcard .art svg{width:100%;max-width:150px;height:auto;color:var(--fg);opacity:.85}
+.dcard h3{margin-bottom:0}
+.dcard .copy{
+  max-height:0;opacity:0;overflow:hidden;
+  transition:max-height .55s cubic-bezier(.22,1,.36,1),opacity .35s ease,margin-top .55s;
+}
+.dcard:hover .copy,.dcard:focus-visible .copy{max-height:200px;opacity:1;margin-top:10px}
+.dcard .copy p{font-size:14px;color:var(--fg-muted);line-height:1.6;min-width:230px}
+/* animated building blocks */
+.dcard .art rect,.dcard .art line,.dcard .art circle,.dcard .art path{
+  transition:opacity .45s ease,transform .55s cubic-bezier(.22,1,.36,1);transform-box:fill-box;transform-origin:center}
+.dcard:hover .art .blk{animation:blkpulse 2.6s ease-in-out infinite}
+.dcard:hover .art .blk:nth-of-type(2){animation-delay:.18s}
+.dcard:hover .art .blk:nth-of-type(3){animation-delay:.36s}
+.dcard:hover .art .blk:nth-of-type(4){animation-delay:.54s}
+.dcard:hover .art .blk:nth-of-type(5){animation-delay:.72s}
+.dcard:hover .art .lnk{stroke:var(--accent);opacity:1}
+@keyframes blkpulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.dcard:hover .art .blk{animation:none}}
+
+/* ═══════════════════ WHO WE WORK WITH — tabbed offer ═══════════════════ */
+.offer-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:start;margin-bottom:40px}
+.tabs{display:inline-flex;gap:6px;padding:5px;border:1px solid var(--border);border-radius:var(--r-pill);
+  background:var(--bg-subtle);margin-bottom:36px}
+.tab{
+  font-family:inherit;font-size:14px;font-weight:500;letter-spacing:-0.01em;
+  padding:11px 26px;border-radius:var(--r-pill);border:none;background:transparent;
+  color:var(--fg-muted);cursor:pointer;transition:background .25s,color .25s;
+}
+.tab.active{background:var(--bg-inverse);color:var(--fg-inverse)}
+.offer-panels{position:relative}
+.offer-panel{
+  display:none;grid-template-columns:0.85fr 1.15fr;gap:clamp(28px,5vw,64px);
+  border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg-subtle);
+  padding:clamp(32px,4vw,52px);align-items:center;
+}
+.offer-panel.active{display:grid}
+.offer-tag{font-size:13px;color:var(--accent);font-weight:600;letter-spacing:-0.01em;margin-bottom:14px}
+.offer-panel h3{font-size:clamp(22px,2.6vw,28px);margin-bottom:16px;letter-spacing:-0.025em;line-height:1.2}
+.offer-panel .desc{font-size:16px;color:var(--fg-muted);line-height:1.65;margin-bottom:26px}
+.offer-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.offer-list li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--fg);list-style:none}
+.offer-list li svg{flex-shrink:0;margin-top:3px;color:var(--accent)}
+.offer-stat{border:1px solid var(--border);border-radius:var(--r-md);background:var(--bg-card);
+  padding:26px;display:flex;flex-direction:column;gap:18px}
+.offer-stat .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  padding-bottom:16px;border-bottom:1px solid var(--border)}
+.offer-stat .row:last-child{border-bottom:none;padding-bottom:0}
+.offer-stat .row .k{font-size:13px;color:var(--fg-muted)}
+.offer-stat .row .v{font-size:15px;font-weight:500;letter-spacing:-0.01em;text-align:right}
+
+/* ═══════════════════ TEAM — stretching profile cards ═══════════════════ */
+.team-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:start;margin-bottom:44px}
+.team-deck{display:flex;flex-wrap:wrap;gap:12px}
+.tcard{
+  position:relative;flex:1 1 240px;min-width:240px;
+  border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg-subtle);
+  overflow:hidden;cursor:pointer;
+  transition:flex-grow .55s cubic-bezier(.22,1,.36,1),border-color .3s;
+}
+.tcard:hover,.tcard:focus-visible{flex-grow:2.4;border-color:var(--border-strong);outline:none}
+.tphoto{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--bg-card)}
+.tphoto img{width:100%;height:100%;object-fit:cover;object-position:center top;
+  filter:grayscale(1) contrast(1.02);transform:scale(1.02);
+  transition:filter .5s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.tcard:hover .tphoto img{filter:grayscale(0);transform:scale(1.06)}
+.tavatar{display:flex;align-items:center;justify-content:center}
+.tavatar span{font-size:26px;font-weight:600;letter-spacing:-0.02em;color:#fff;opacity:.92}
+.tinfo{padding:16px 18px 20px}
+.trow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.trow h3{font-size:16px;letter-spacing:-0.015em}
+.ttag{flex-shrink:0;font-size:10.5px;font-weight:600;letter-spacing:.04em;
+  padding:4px 9px;border-radius:var(--r-pill);border:1px solid var(--border-strong);color:var(--fg-muted)}
+.tcard:hover .ttag{color:var(--accent);border-color:var(--accent)}
+.trole{font-size:12.5px;color:var(--fg-muted);margin-top:3px}
+.tcopy{max-height:0;opacity:0;overflow:hidden;
+  transition:max-height .5s cubic-bezier(.22,1,.36,1),opacity .35s ease,margin-top .5s}
+.tcard:hover .tcopy,.tcard:focus-visible .tcopy{max-height:100px;opacity:1;margin-top:9px}
+.tcopy p{font-size:13px;color:var(--fg-muted);line-height:1.6;min-width:210px}
+
+/* ═══════════════════ CTA BAND ═══════════════════ */
+.band{position:relative;overflow:hidden;border-radius:var(--r-xl);
+  background:var(--bg-inverse);color:var(--fg-inverse);padding:clamp(48px,7vw,88px);text-align:center}
+.band h2{margin-bottom:14px;position:relative;z-index:2}
+.band p{position:relative;z-index:2;max-width:46ch;margin:0 auto 30px;
+  color:color-mix(in srgb,var(--fg-inverse) 62%,transparent)}
+.band .btn-primary{background:var(--bg);color:var(--fg);position:relative;z-index:2}
+.band-glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.42;z-index:0}
+.g1{width:340px;height:340px;left:-60px;top:-120px;background:#ff5d1f}
+.g2{width:300px;height:300px;right:-40px;bottom:-140px;background:#7b5cff}
+.g3{width:260px;height:260px;left:42%;bottom:-160px;background:#ff18c2}
+.band .shader-canvas{z-index:1;opacity:.7}
+.band-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--bg-inverse) 28%,transparent),
+    color-mix(in srgb,var(--bg-inverse) 82%,transparent))}
+
+/* ═══════════════════ FOOTER ═══════════════════ */
+footer{border-top:1px solid var(--border);padding-top:56px}
+.foot-grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:32px}
+.foot-col h4{font-size:13px;color:var(--fg-muted);font-weight:500;margin-bottom:14px}
+.foot-col a{display:block;font-size:14px;margin-bottom:9px}
+.foot-col a:hover{color:var(--fg-muted)}
+.wordmark{font-size:clamp(52px,12.4vw,160px);font-weight:600;letter-spacing:-0.05em;
+  line-height:.9;padding:60px 0 26px}
+.foot-bar{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:20px 0 40px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-muted)}
+
+/* ═══════════════════ RESPONSIVE ═══════════════════ */
+@media(max-width:1000px){
+  .deck{flex-wrap:wrap;min-height:0}
+  .dcard{flex:1 1 calc(50% - 6px)}
+  .dcard .copy{max-height:200px;opacity:1;margin-top:10px}
+  .dcard:hover{flex-grow:1}
+  .tcard{flex:1 1 calc(33.333% - 8px)}
+  .tcard:hover{flex-grow:1.4}
+}
+@media(max-width:860px){
+  .hero-grid,.why-grid,.do-head,.foot-grid,.offer-head,.offer-panel,.team-head{grid-template-columns:1fr}
+  .why-grid{align-items:start;gap:28px}
+  .nav-links{display:none}
+  .hero-stats{gap:32px}
+}
+@media(max-width:520px){
+  .tabs{width:100%}
+  .tab{flex:1;text-align:center;padding:11px 12px}
+}
+@media(max-width:600px){
+  .dcard{flex:1 1 100%}
+  .tcard{flex:1 1 calc(50% - 6px)}
+  .tcard:hover{flex-grow:1}
+  .tcard .tcopy{max-height:100px;opacity:1;margin-top:9px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="brand"><canvas class="mark-canvas" width="12" height="12" aria-hidden="true"></canvas>magenta club</a>
+    <div class="nav-links">
+      <a href="#why">Why</a>
+      <a href="#what">What we do</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeBtn" aria-label="Toggle dark mode">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="#" class="btn btn-primary btn-sm js-calendly">Book a call</a>
+    </div>
+  </nav>
+</header>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="rv">Design for AI-led ventures</h1>
+      <p class="lead rv">We are a craft-led studio of senior PDs and PMs working for start-ups and scale-ups.</p>
+      <div class="hero-cta rv">
+        <a href="#" class="btn btn-primary js-calendly">Book a product design call <span class="arw">→</span></a>
+        <a href="#what" class="btn btn-ghost">What we do</a>
+      </div>
+      <div class="hero-stats rv">
+        <div>
+          <div class="stat-n">40+</div>
+          <div class="stat-l">start ups and scale ups we've worked with</div>
+        </div>
+        <div>
+          <div class="stat-n">$300M+</div>
+          <div class="stat-l">raised by those teams after we shipped</div>
+        </div>
+      </div>
+    </div>
+    <div class="artwork rv">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+      <span class="blob b4"></span><span class="blob b5"></span>
+      <canvas class="shader-canvas" id="heroShader" aria-hidden="true"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TRUSTED BY ══════════ -->
+<section class="trusted">
+  <div class="trusted-label">Trusted by the teams building it</div>
+  <div class="marquee" id="marquee">
+    <div class="marquee-track">
+      <span>Sky</span><span>PD Kins</span><span>Bite Club</span><span>Unilever</span>
+      <span>Journey Fertility</span><span>Cosmic Clash</span><span>Mindful AI</span><span>Workflow Labs</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ WHY ══════════ -->
+<section class="section" id="why">
+  <div class="wrap why-grid">
+    <h2 class="rv">Hiring senior talent slows you down. We speed you up.</h2>
+    <div>
+      <p class="why-body rv">AI has changed the design work. Our senior design talent pod produces not only <em>agentic design firepower</em> but also builds systems that grow over time, and produce more modules on demand.</p>
+      <div class="rv"><a href="#" class="btn btn-primary js-calendly">Work with us <span class="arw">→</span></a></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ══════════ WHAT WE DO ══════════ -->
+<section class="section" id="what">
+  <div class="wrap">
+    <div class="do-head">
+      <h2 class="rv">What we do</h2>
+      <p class="lead rv">Six disciplines, one embedded pod. Hover a card to open it up.</p>
+    </div>
+
+    <div class="deck rv">
+
+      <!-- 01 AI features roadmap -->
+      <article class="dcard" tabindex="0">
+        <span class="num">01</span>
+        <div class="art">
+          <svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect class="blk" x="8"  y="56" width="26" height="20" rx="2"/>
+            <rect class="blk" x="42" y="40" width="26" height="36" rx="2"/>
+            <rect class="blk" x="76" y="20" width="26" height="56" rx="2"/>
+            <path class="lnk" d="M34 66h8M68 58h8" stroke-dasharray="3 3" opacity=".45"/>
+            <path d="M8 84h94" opacity=".3"/>
+          </svg>
+        </div>
+        <div>
+          <h3>AI features roadmap</h3>
+          <div class="copy"><p>System thinking for AI-native products. We map the landscape, find the leverage points and sequence the AI features so every release builds on the last.</p></div>
+        </div>
+      </article>
+
+      <!-- 02 User research -->
+      <article class="dcard" tabindex="0">
+        <span class="num">02</span>
+        <div class="art">
+          <svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle class="blk" cx="30" cy="30" r="7"/>
+            <circle class="blk" cx="66" cy="20" r="7"/>
+            <circle class="blk" cx="94" cy="44" r="7"/>
+            <circle class="blk" cx="40" cy="70" r="7"/>
+            <circle class="blk" cx="78" cy="76" r="7"/>
+            <path class="lnk" d="M30 30 66 20 94 44M66 20 40 70 78 76 94 44" opacity=".45"/>
+          </svg>
+        </div>
+        <div>
+          <h3>User research</h3>
+          <div class="copy"><p>Interviews, usability testing and competitor teardowns — synthesised into decisions your team can act on, not a deck nobody reads.</p></div>
+        </div>
+      </article>
+
+      <!-- 03 Onboarding and activation -->
+      <article class="dcard" tabindex="0">
+        <span class="num">03</span>
+        <div class="art">
+          <svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect class="blk" x="10" y="30" width="22" height="40" rx="2"/>
+            <rect class="blk" x="44" y="30" width="22" height="40" rx="2"/>
+            <rect class="blk" x="78" y="30" width="22" height="40" rx="2"/>
+            <path class="lnk" d="M32 50h12M66 50h12" opacity=".45"/>
+            <path class="lnk" d="M40 46l4 4-4 4M74 46l4 4-4 4" opacity=".45"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Onboarding &amp; activation</h3>
+          <div class="copy"><p>First-run flows, empty states and the aha moment — designed so the people who sign up actually stay and come back.</p></div>
+        </div>
+      </article>
+
+      <!-- 04 UX and UI -->
+      <article class="dcard" tabindex="0">
+        <span class="num">04</span>
+        <div class="art">
+          <svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect class="blk" x="14" y="18" width="92" height="64" rx="3"/>
+            <path d="M14 34h92" opacity=".4"/>
+            <rect class="blk" x="24" y="44" width="30" height="28" rx="2"/>
+            <path class="lnk" d="M64 48h32M64 58h24M64 68h32" opacity=".45"/>
+          </svg>
+        </div>
+        <div>
+          <h3>UX and UI</h3>
+          <div class="copy"><p>End-to-end flows and high-fidelity interfaces, specced and handed over ready to build — no translation layer needed.</p></div>
+        </div>
+      </article>
+
+      <!-- 05 Design systems -->
+      <article class="dcard" tabindex="0">
+        <span class="num">05</span>
+        <div class="art">
+          <svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect class="blk" x="16" y="20" width="34" height="26" rx="2"/>
+            <rect class="blk" x="60" y="20" width="34" height="26" rx="2"/>
+            <rect class="blk" x="16" y="56" width="34" height="26" rx="2"/>
+            <rect class="blk" x="60" y="56" width="34" height="26" rx="2"/>
+            <path class="lnk" d="M50 33h10M50 69h10M33 46v10M77 46v10" opacity=".45"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Design systems</h3>
+          <div class="copy"><p>Tokens, components and documentation that hold quality steady as the team, the surface area and the pace all grow.</p></div>
+        </div>
+      </article>
+
+      <!-- 06 Prototyping -->
+      <article class="dcard" tabindex="0">
+        <span class="num">06</span>
+        <div class="art">
+          <svg viewBox="0 0 120 100" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path class="blk" d="M60 16l38 21v26L60 84 22 63V37z"/>
+            <path class="lnk" d="M60 16v68M60 50l38-13M60 50L22 37" opacity=".45"/>
+            <circle class="blk" cx="60" cy="50" r="4"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Prototyping</h3>
+          <div class="copy"><p>Clickable and coded prototypes that de-risk the bet — so you find out what works before engineering commits a sprint to it.</p></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ══════════ WHO WE WORK WITH ══════════ -->
+<section class="section" id="offer">
+  <div class="wrap">
+    <div class="offer-head">
+      <h2 class="rv">Built for wherever you are</h2>
+      <p class="lead rv">Same senior pod, two different jobs to be done. See which one is you.</p>
+    </div>
+
+    <div class="rv">
+      <div class="tabs" role="tablist" aria-label="Who we work with">
+        <button class="tab active" id="tabStartup" role="tab" aria-selected="true" aria-controls="panelStartup">Start ups</button>
+        <button class="tab" id="tabScaleup" role="tab" aria-selected="false" aria-controls="panelScaleup">Scale ups</button>
+      </div>
+
+      <div class="offer-panels">
+
+        <!-- START UPS -->
+        <div class="offer-panel active" id="panelStartup" role="tabpanel" aria-labelledby="tabStartup">
+          <div>
+            <div class="offer-tag">For start ups</div>
+            <h3>You've raised $1–10M and need a product designer who can move at your pace.</h3>
+            <p class="desc">You have a team of engineers shipping fast and no senior design voice in the room. We embed a PD who can take you from zero to a shippable v1 — research, UX, UI and the first version of a design system, without the six-month hire.</p>
+            <ul class="offer-list">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>One senior PD embedded in your team, week one</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>A shippable v1 — not a deck, a product your engineers can build</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>The early design system that won't need rebuilding at Series A</li>
+            </ul>
+            <a href="#" class="btn btn-primary js-calendly">Book a product design call <span class="arw">→</span></a>
+          </div>
+          <div class="offer-stat">
+            <div class="row"><span class="k">Typical stage</span><span class="v">Seed – Series A</span></div>
+            <div class="row"><span class="k">Raised</span><span class="v">$1M – $10M</span></div>
+            <div class="row"><span class="k">Team you get</span><span class="v">1 senior PD</span></div>
+            <div class="row"><span class="k">Time to embedded</span><span class="v">2 weeks</span></div>
+          </div>
+        </div>
+
+        <!-- SCALE UPS -->
+        <div class="offer-panel" id="panelScaleup" role="tabpanel" aria-labelledby="tabScaleup">
+          <div>
+            <div class="offer-tag">For scale ups</div>
+            <h3>You've raised $10M+ and now need a bigger design team to get you to the next milestone.</h3>
+            <p class="desc">Your v1 worked. Now you're shipping across more surfaces, onboarding more customers, and your design system is starting to crack under its own weight. We plug in a full pod — PM, PD and specialists — to scale the system and keep quality high as headcount grows.</p>
+            <ul class="offer-list">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>A full pod — PM, senior PD and specialists on demand</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Design systems that scale — new modules produced on demand</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Coverage across every surface as your product — and team — grow</li>
+            </ul>
+            <a href="#" class="btn btn-primary js-calendly">Book a product design call <span class="arw">→</span></a>
+          </div>
+          <div class="offer-stat">
+            <div class="row"><span class="k">Typical stage</span><span class="v">Series B+</span></div>
+            <div class="row"><span class="k">Raised</span><span class="v">$10M+</span></div>
+            <div class="row"><span class="k">Team you get</span><span class="v">Full pod</span></div>
+            <div class="row"><span class="k">Time to embedded</span><span class="v">2 weeks</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ══════════ TEAM ══════════ -->
+<section class="section" id="team">
+  <div class="wrap">
+    <div class="team-head">
+      <h2 class="rv">Who you'll work with</h2>
+      <p class="lead rv">Eight senior product designers, four product managers. One pod gets assembled around your roadmap — hover a card to see their focus.</p>
+    </div>
+
+    <div class="team-deck rv">
+
+      <!-- ── Product Managers (real photos) ── -->
+      <article class="tcard" tabindex="0">
+        <div class="tphoto"><img src="assets/team-ida.jpg" alt="Ida" loading="lazy"></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Ida</h3><span class="ttag">PM</span></div>
+          <div class="trole">Product Manager</div>
+          <div class="tcopy"><p>Roadmap and stakeholder alignment — keeps the pod pointed at the milestone that matters.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto"><img src="assets/team-volkan.jpg" alt="Volkan" loading="lazy"></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Volkan</h3><span class="ttag">PM</span></div>
+          <div class="trole">Product Manager</div>
+          <div class="tcopy"><p>Discovery and prioritisation — turns a long backlog into the next shippable slice.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto"><img src="assets/team-gokay.jpg" alt="Gokay" loading="lazy"></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Gokay</h3><span class="ttag">PM</span></div>
+          <div class="trole">Product Manager</div>
+          <div class="tcopy"><p>Metrics and activation — instruments the funnel so every release proves itself.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto"><img src="assets/team-umut.jpg" alt="Umut" loading="lazy"></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Umut</h3><span class="ttag">PM</span></div>
+          <div class="trole">Product Manager</div>
+          <div class="tcopy"><p>Engineering handoff — the bridge between your roadmap and your sprint board.</p></div>
+        </div>
+      </article>
+
+      <!-- ── Product Designers ── -->
+      <article class="tcard" tabindex="0">
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ff5d1f,#7b5cff)"><span>MC</span></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Maya Chen</h3><span class="ttag">PD</span></div>
+          <div class="trole">Senior Product Designer</div>
+          <div class="tcopy"><p>AI features roadmap — maps the landscape and sequences what ships next.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#3ea8ff,#ff18c2)"><span>LF</span></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Leo Fischer</h3><span class="ttag">PD</span></div>
+          <div class="trole">Senior Product Designer</div>
+          <div class="tcopy"><p>User research — interviews and usability testing, synthesised into decisions.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ff18c2,#7b5cff)"><span>PA</span></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Priya Anand</h3><span class="ttag">PD</span></div>
+          <div class="trole">Senior Product Designer</div>
+          <div class="tcopy"><p>Onboarding and activation — first-run flows built to turn signups into users.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ffb020,#3ea8ff)"><span>TR</span></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Tomas Reyes</h3><span class="ttag">PD</span></div>
+          <div class="trole">Senior Product Designer</div>
+          <div class="tcopy"><p>UX and UI — end-to-end flows and interfaces, specced ready to build.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#7b5cff,#3ea8ff)"><span>HK</span></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Hana Kobayashi</h3><span class="ttag">PD</span></div>
+          <div class="trole">Senior Product Designer</div>
+          <div class="tcopy"><p>Design systems — tokens and components that hold quality as you scale.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ff18c2,#ffb020)"><span>OL</span></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Oscar Lindqvist</h3><span class="ttag">PD</span></div>
+          <div class="trole">Senior Product Designer</div>
+          <div class="tcopy"><p>Prototyping — clickable and coded prototypes that de-risk the bet.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#3ea8ff,#ff5d1f)"><span>ZH</span></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Zara Hussain</h3><span class="ttag">PD</span></div>
+          <div class="trole">Senior Product Designer</div>
+          <div class="tcopy"><p>Brand and visual — identity systems that make the product recognisable.</p></div>
+        </div>
+      </article>
+
+      <article class="tcard" tabindex="0">
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ff5d1f,#ff18c2)"><span>FN</span></div>
+        <div class="tinfo">
+          <div class="trow"><h3>Felix Novak</h3><span class="ttag">PD</span></div>
+          <div class="trole">Senior Product Designer</div>
+          <div class="tcopy"><p>Accessibility and motion — makes the craft hold up under real use.</p></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="band rv">
+      <span class="band-glow g1"></span><span class="band-glow g2"></span><span class="band-glow g3"></span>
+      <canvas class="shader-canvas" id="ctaShader" aria-hidden="true"></canvas>
+      <div class="band-scrim"></div>
+      <h2>Don't pause your roadmap to hire</h2>
+      <p>Tell us what you're building. If it's a fit, we can be embedded and shipping within two weeks.</p>
+      <a href="#" class="btn btn-primary js-calendly">Book a call <span class="arw">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="brand" style="margin-bottom:10px"><canvas class="mark-canvas" width="12" height="12" aria-hidden="true"></canvas>magenta club</div>
+        <p class="muted" style="font-size:14px;max-width:32ch">A craft-led studio of senior PMs and PDs, embedded in AI-led start ups and scale ups.</p>
+      </div>
+      <div class="foot-col">
+        <h4>What we do</h4>
+        <a href="#what">AI features roadmap</a><a href="#what">User research</a>
+        <a href="#what">Onboarding &amp; activation</a><a href="#what">UX and UI</a>
+      </div>
+      <div class="foot-col">
+        <h4>Studio</h4>
+        <a href="#why">Why us</a><a href="#what">Design systems</a><a href="#what">Prototyping</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="#" class="js-calendly">Book a call</a>
+        <a href="mailto:hello@magenta.club">hello@magenta.club</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="wordmark">magenta club</div>
+    <div class="foot-bar"><span>© 2026 Magenta Club</span><span>London</span></div>
+  </div>
+</footer>
+
+<script>
+/* ─── Calendly: paste your link here once the studio name is settled ─── */
+var CALENDLY_URL = "https://calendly.com/hellothebury/30min";
+document.querySelectorAll('.js-calendly').forEach(function(a){
+  a.setAttribute('href', CALENDLY_URL || 'mailto:hello@magenta.club?subject=Book%20a%20call');
+  if(CALENDLY_URL){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); }
+});
+
+/* ─── theme ─── */
+var root=document.documentElement;
+document.getElementById('themeBtn').addEventListener('click',function(){
+  root.setAttribute('data-theme', root.getAttribute('data-theme')==='dark'?'light':'dark');
+});
+
+/* ══════════════════════════════════════════════════════════════
+   FLOW SHADER — domain-warped spectral field, WebGL
+   Ported from the ShaderBackground.tsx component: same vertex/
+   fragment source, same iTime/iResolution/iMouse uniforms.
+   Runs on each .shader-canvas independently; pauses off-screen;
+   degrades to a single static frame under reduced-motion; leaves
+   the CSS gradient blobs visible as a no-WebGL fallback.
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var VERT = "attribute vec4 aVertexPosition;\n" +
+    "void main() {\n" +
+    "  gl_Position = aVertexPosition;\n" +
+    "}\n";
+
+  var FRAG = "precision highp float;\n" +
+    "uniform vec2 iResolution;\n" +
+    "uniform float iTime;\n" +
+    "uniform vec2 iMouse;\n" +
+    "uniform float iHover;\n" +
+    "\n" +
+    "vec3 spectral_colour(float l) {\n" +
+    "  float r=0.0,g=0.0,b=0.0;\n" +
+    "  if ((l>=400.0)&&(l<410.0)) { float t=(l-400.0)/(410.0-400.0); r=+(0.33*t)-(0.20*t*t); }\n" +
+    "  else if ((l>=410.0)&&(l<475.0)) { float t=(l-410.0)/(475.0-410.0); r=0.14-(0.13*t*t); }\n" +
+    "  else if ((l>=545.0)&&(l<595.0)) { float t=(l-545.0)/(595.0-545.0); r=+(1.98*t)-(t*t); }\n" +
+    "  else if ((l>=595.0)&&(l<650.0)) { float t=(l-595.0)/(650.0-595.0); r=0.98+(0.06*t)-(0.40*t*t); }\n" +
+    "  else if ((l>=650.0)&&(l<700.0)) { float t=(l-650.0)/(700.0-650.0); r=0.65-(0.84*t)+(0.20*t*t); }\n" +
+    "  if ((l>=415.0)&&(l<475.0)) { float t=(l-415.0)/(475.0-415.0); g=+(0.80*t*t); }\n" +
+    "  else if ((l>=475.0)&&(l<590.0)) { float t=(l-475.0)/(590.0-475.0); g=0.8+(0.76*t)-(0.80*t*t); }\n" +
+    "  else if ((l>=585.0)&&(l<639.0)) { float t=(l-585.0)/(639.0-585.0); g=0.82-(0.80*t); }\n" +
+    "  if ((l>=400.0)&&(l<475.0)) { float t=(l-400.0)/(475.0-400.0); b=+(2.20*t)-(1.50*t*t); }\n" +
+    "  else if ((l>=475.0)&&(l<560.0)) { float t=(l-475.0)/(560.0-475.0); b=0.7-(t)+(0.30*t*t); }\n" +
+    "  return vec3(r,g,b);\n" +
+    "}\n" +
+    "\n" +
+    /* dark blue → magenta → red gradient, used while the cursor is over the shader */
+    "vec3 magenta_colour(float t) {\n" +
+    "  vec3 darkBlue = vec3(0.05, 0.02, 0.22);\n" +
+    "  vec3 magenta  = vec3(1.0, 0.094, 0.761);\n" +
+    "  vec3 red      = vec3(0.62, 0.04, 0.14);\n" +
+    "  vec3 col = mix(darkBlue, magenta, smoothstep(0.0, 0.5, t));\n" +
+    "  col = mix(col, red, smoothstep(0.5, 1.0, t));\n" +
+    "  return col;\n" +
+    "}\n" +
+    "\n" +
+    "void main() {\n" +
+    "  vec2 p = (2.0*gl_FragCoord.xy - iResolution.xy) / min(iResolution.x, iResolution.y);\n" +
+    "  p *= 2.0;\n" +
+    "  vec2 m = (iMouse * 2.0 - 1.0) * 2.0 * (iResolution.xy / min(iResolution.x, iResolution.y));\n" +
+    "  float dist = length(p - m);\n" +
+    "  float pull = 0.45 * exp(-dist * 0.35);\n" +
+    "  for(int i=0;i<8;i++) {\n" +
+    "    vec2 newp = vec2(\n" +
+    "      p.y + cos(p.x + iTime) - sin(p.y * cos(iTime * 0.2)) + pull * sin(m.y - p.y),\n" +
+    "      p.x - sin(p.y - iTime) - cos(p.x * sin(iTime * 0.3)) + pull * cos(m.x - p.x)\n" +
+    "    );\n" +
+    "    p = newp;\n" +
+    "  }\n" +
+    "  float phase = p.y * 50.0 + 500.0 + sin(iTime * 0.6);\n" +
+    "  vec3 base = spectral_colour(phase);\n" +
+    "  float tw = abs(fract(phase * 0.006) * 2.0 - 1.0);\n" +
+    "  vec3 hoverCol = magenta_colour(tw);\n" +
+    "  vec3 col = mix(base, hoverCol, clamp(iHover, 0.0, 1.0));\n" +
+    "  gl_FragColor = vec4(col, 1.0);\n" +
+    "}\n";
+
+  function compile(gl, type, src){
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+      console.error('shader compile error', gl.getShaderInfoLog(s));
+      gl.deleteShader(s);
+      return null;
+    }
+    return s;
+  }
+
+  function attachFlowShader(canvas){
+    if(!canvas) return;
+    var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if(!gl) return; // CSS blobs remain visible as fallback
+
+    var vs = compile(gl, gl.VERTEX_SHADER, VERT);
+    var fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
+    if(!vs || !fs) return;
+
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog, gl.LINK_STATUS)){
+      console.error('shader link error', gl.getProgramInfoLog(prog));
+      return;
+    }
+    gl.useProgram(prog);
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    var posLoc = gl.getAttribLocation(prog, 'aVertexPosition');
+    gl.enableVertexAttribArray(posLoc);
+    gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+    var uTime = gl.getUniformLocation(prog, 'iTime');
+    var uRes  = gl.getUniformLocation(prog, 'iResolution');
+    var uMouse= gl.getUniformLocation(prog, 'iMouse');
+    var uHover= gl.getUniformLocation(prog, 'iHover');
+
+    var mouse = {x:.5,y:.5,tx:.5,ty:.5};
+    var hover = {v:0, target:0};
+    var visible = true, raf = null, start = performance.now();
+    var parent = canvas.parentElement;
+    var DPR = Math.min(window.devicePixelRatio || 1, 1.6);
+
+    function resize(){
+      var r = canvas.getBoundingClientRect();
+      var w = Math.max(1, Math.round(r.width * DPR));
+      var h = Math.max(1, Math.round(r.height * DPR));
+      if(canvas.width !== w || canvas.height !== h){
+        canvas.width = w; canvas.height = h;
+        gl.viewport(0, 0, w, h);
+      }
+    }
+
+    function onMove(e){
+      var r = canvas.getBoundingClientRect();
+      mouse.tx = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      mouse.ty = Math.min(1, Math.max(0, 1 - (e.clientY - r.top) / r.height));
+    }
+    function onEnter(){ hover.target = 1; }
+    function onLeave(){ mouse.tx = .5; mouse.ty = .5; hover.target = 0; }
+
+    function drawFrame(t){
+      gl.uniform1f(uTime, t);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform2f(uMouse, mouse.x, mouse.y);
+      gl.uniform1f(uHover, hover.v);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    }
+
+    if(REDUCED){
+      resize();
+      drawFrame(2.4);
+      return; // static frame only, no listeners, no rAF
+    }
+
+    parent.addEventListener('mousemove', onMove);
+    parent.addEventListener('mouseenter', onEnter);
+    parent.addEventListener('mouseleave', onLeave);
+    window.addEventListener('resize', resize);
+
+    function loop(){
+      if(visible){
+        mouse.x += (mouse.tx - mouse.x) * .06;
+        mouse.y += (mouse.ty - mouse.y) * .06;
+        hover.v += (hover.target - hover.v) * .08;
+        resize();
+        drawFrame((performance.now() - start) / 1000);
+      }
+      raf = requestAnimationFrame(loop);
+    }
+
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ visible = en.isIntersecting; });
+      }, {threshold: 0}).observe(canvas);
+    }
+
+    resize();
+    loop();
+  }
+
+  attachFlowShader(document.getElementById('heroShader'));
+  attachFlowShader(document.getElementById('ctaShader'));
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   PIXEL MARK — the brand mark rotates through generated,
+   pixel-art bust silhouettes of the pod (one per team member),
+   dissolving from one to the next in magenta. Deterministic per
+   name, so the same person always renders the same portrait.
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  var canvases = document.querySelectorAll('.mark-canvas');
+  if(!canvases.length) return;
+
+  var GRID = 12;
+  var NAMES = ['Ida','Volkan','Gokay','Umut','Maya Chen','Leo Fischer','Priya Anand',
+    'Tomas Reyes','Hana Kobayashi','Oscar Lindqvist','Zara Hussain','Felix Novak'];
+  var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function strSeed(s){ var h=0; for(var i=0;i<s.length;i++){ h=(Math.imul(31,h)+s.charCodeAt(i))|0; } return h; }
+  function mulberry32(a){
+    return function(){
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // deterministic pixel bust for a given name — head + shoulders, seeded variance
+  function generateBust(name){
+    var rand = mulberry32(strSeed(name));
+    var g = [];
+    for(var y=0;y<GRID;y++){ g.push(new Array(GRID).fill(false)); }
+
+    var cx = GRID/2;
+    var headCy = 3.6 + rand()*0.5;
+    var headR  = 2.7 + rand()*0.7;
+    var shoulderTop = headCy + headR + 1.1;
+    var maxW = 8 + rand()*3;   // shoulder span
+    var neckW = 1.6 + rand()*0.8;
+    var ellCy = shoulderTop + (GRID-shoulderTop)*0.15;
+    var ellRy = (GRID-shoulderTop)*1.35;
+
+    for(var y2=0;y2<GRID;y2++){
+      for(var x=0;x<GRID;x++){
+        var dx = (x+0.5) - cx, dy = (y2+0.5) - headCy;
+        var inHead = (dx*dx)/(headR*headR) + (dy*dy)/((headR*1.12)*(headR*1.12)) <= 1;
+
+        var inNeck = false;
+        if(y2 >= headCy+headR-0.6 && y2 < shoulderTop){
+          inNeck = Math.abs((x+0.5)-cx) <= neckW/2;
+        }
+
+        var inShoulder = false;
+        if(y2 >= shoulderTop){
+          var ex = ((x+0.5)-cx)/(maxW/2);
+          var ey = ((y2+0.5)-ellCy)/ellRy;
+          inShoulder = (ex*ex + ey*ey) <= 1;
+        }
+
+        g[y2][x] = inHead || inNeck || inShoulder;
+      }
+    }
+
+    // hair/silhouette variance along the crown
+    var crownTop = Math.max(0, Math.round(headCy - headR));
+    for(var x2=0;x2<GRID;x2++){
+      if(g[crownTop] && g[crownTop][x2] && rand() < 0.35) g[crownTop][x2] = false;
+      if(crownTop+1 < GRID && rand() < 0.12) g[crownTop+1][x2] = true;
+    }
+
+    // a couple of sparse texture holes
+    var holes = 2 + Math.floor(rand()*2);
+    for(var h=0; h<holes; h++){
+      var hx = Math.floor(rand()*GRID), hy = Math.floor(2+rand()*(GRID-3));
+      if(g[hy] && g[hy][hx]) g[hy][hx] = false;
+    }
+
+    return g;
+  }
+
+  function initMark(canvas){
+    var ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    ctx.imageSmoothingEnabled = false;
+
+    var order = NAMES.slice();
+    var idx = 0;
+    var profiles = order.map(generateBust);
+    var current = profiles[0].map(function(row){ return row.slice(); });
+
+    function accent(){
+      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#ff18c2';
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,GRID,GRID);
+      ctx.fillStyle = accent();
+      for(var y=0;y<GRID;y++){
+        for(var x=0;x<GRID;x++){
+          if(current[y][x]) ctx.fillRect(x,y,1,1);
+        }
+      }
+    }
+
+    draw();
+    if(REDUCED) return; // static portrait only, no cycling
+
+    function transitionTo(target, done){
+      var diffs = [];
+      for(var y=0;y<GRID;y++){
+        for(var x=0;x<GRID;x++){
+          if(current[y][x] !== target[y][x]) diffs.push([x,y]);
+        }
+      }
+      // shuffle
+      for(var i=diffs.length-1;i>0;i--){
+        var j=Math.floor(Math.random()*(i+1));
+        var t=diffs[i]; diffs[i]=diffs[j]; diffs[j]=t;
+      }
+      var steps = 9, step = 0;
+      var perStep = Math.max(1, Math.ceil(diffs.length/steps));
+
+      function tick(){
+        var slice = diffs.slice(step*perStep, (step+1)*perStep);
+        slice.forEach(function(c){ current[c[1]][c[0]] = target[c[1]][c[0]]; });
+        draw();
+        step++;
+        if(step*perStep < diffs.length){
+          setTimeout(tick, 38);
+        } else {
+          current = target.map(function(row){ return row.slice(); });
+          draw();
+          if(done) done();
+        }
+      }
+      tick();
+    }
+
+    function cycle(){
+      idx = (idx+1) % profiles.length;
+      transitionTo(profiles[idx], function(){
+        setTimeout(cycle, 2000);
+      });
+    }
+    setTimeout(cycle, 2000);
+  }
+
+  canvases.forEach(initMark);
+})();
+
+/* ─── who we work with: tabs ─── */
+(function(){
+  var tabs=[
+    {btn:document.getElementById('tabStartup'), panel:document.getElementById('panelStartup')},
+    {btn:document.getElementById('tabScaleup'), panel:document.getElementById('panelScaleup')}
+  ];
+  if(!tabs[0].btn) return;
+  tabs.forEach(function(t){
+    t.btn.addEventListener('click',function(){
+      tabs.forEach(function(o){
+        o.btn.classList.toggle('active', o===t);
+        o.btn.setAttribute('aria-selected', o===t ? 'true' : 'false');
+        o.panel.classList.toggle('active', o===t);
+      });
+    });
+  });
+})();
+
+/* ─── scroll reveal ─── */
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(e,i){
+      if(e.isIntersecting){ setTimeout(function(){e.target.classList.add('in')}, i*70); io.unobserve(e.target); }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+/* ─── marquee: duplicate track for a seamless loop ─── */
+(function(){
+  var m=document.getElementById('marquee'); if(!m) return;
+  m.appendChild(m.firstElementChild.cloneNode(true));
+})();
+
+</script>
+</body>
+</html>
