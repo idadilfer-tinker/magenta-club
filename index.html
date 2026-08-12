@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Magenta Club — Design firepower for AI-led start ups and scale ups</title>
+<title>Gen8 — Design firepower for AI-led start ups and scale ups</title>
 <meta name="description" content="A craft-led studio of senior PMs and PDs. Hiring slows you down. We speed you up." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,27 +11,33 @@
 <style>
 /* ═══════════════════ TOKENS ═══════════════════ */
 :root{
-  --bg:#ffffff; --bg-subtle:#fafafa; --bg-card:#f4f4f5; --bg-inverse:#0b0b0c;
+  --bg:#faf8f4; --bg-subtle:#f5f2ec; --bg-card:#f0ede5; --bg-inverse:#0b0b0c;
   --fg:#09090b; --fg-muted:#71717a; --fg-inverse:#ffffff;
-  --border:#e4e4e7; --border-strong:#d4d4d8;
-  --accent:#ff18c2;
-  --r-md:12px; --r-lg:16px; --r-xl:24px; --r-pill:999px;
+  --border:#e4e0d6; --border-strong:#d4cec0;
+  --accent:#ff5d1f; --accent-2:#3ea8ff; --accent-3:#7b5cff;
+  --r-md:0px; --r-lg:0px; --r-xl:0px; --r-pill:0px;
   --container:1200px; --pad:24px; --section:clamp(80px,10vw,140px);
-  --glass-bg:rgba(255,255,255,.55); --glass-border:rgba(20,10,30,.09); --glass-shadow:rgba(20,10,30,.1);
+  --glass-bg:rgba(250,248,244,.55); --glass-border:rgba(20,10,30,.09); --glass-shadow:rgba(20,10,30,.1);
+  --paper-line:rgba(9,9,11,.05);
 }
 [data-theme="dark"]{
-  --bg:#0b0b0c; --bg-subtle:#121213; --bg-card:#18181b; --bg-inverse:#ffffff;
+  --bg:#0e0d0b; --bg-subtle:#151412; --bg-card:#1c1a17; --bg-inverse:#ffffff;
   --fg:#fafafa; --fg-muted:#a1a1aa; --fg-inverse:#0b0b0c;
-  --border:#27272a; --border-strong:#3f3f46;
-  --glass-bg:rgba(24,24,27,.5); --glass-border:rgba(255,255,255,.09); --glass-shadow:rgba(0,0,0,.35);
+  --border:#2c2924; --border-strong:#3f3a33;
+  --glass-bg:rgba(28,26,23,.5); --glass-border:rgba(255,255,255,.09); --glass-shadow:rgba(0,0,0,.35);
+  --paper-line:rgba(255,255,255,.045);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  background:var(--bg);color:var(--fg);
+  background-color:var(--bg);color:var(--fg);
+  background-image:
+    linear-gradient(90deg,var(--paper-line) 1px,transparent 1px),
+    linear-gradient(0deg,var(--paper-line) 1px,transparent 1px);
+  background-size:29px 29px;
   font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   font-size:16px;line-height:1.55;letter-spacing:-0.011em;
-  -webkit-font-smoothing:antialiased;transition:background .2s,color .2s;
+  -webkit-font-smoothing:antialiased;transition:background-color .2s,color .2s;
 }
 a{color:inherit;text-decoration:none}
 svg{display:block}
@@ -77,7 +83,7 @@ header{position:sticky;top:14px;z-index:50;padding:0 var(--pad)}
 header.scrolled .nav{box-shadow:0 1px 1px var(--glass-shadow),0 18px 40px -14px var(--glass-shadow),inset 0 1px 0 rgba(255,255,255,.4);transform:translateY(1px)}
 .brand{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;letter-spacing:-0.02em}
 .mark-canvas{
-  width:26px;height:26px;flex-shrink:0;border-radius:8px;
+  width:26px;height:26px;flex-shrink:0;border-radius:0;
   background:var(--bg-card);border:1px solid var(--border);
   image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:crisp-edges;
   animation:markGlow 3.6s ease-in-out infinite;
@@ -117,7 +123,7 @@ header.scrolled .nav{box-shadow:0 1px 1px var(--glass-shadow),0 18px 40px -14px 
 .b1{width:70%;height:70%;left:-10%;top:-8%;background:#ff5d1f}
 .b2{width:62%;height:66%;left:26%;top:-14%;background:#ffb020}
 .b3{width:66%;height:70%;left:44%;top:16%;background:#3ea8ff}
-.b4{width:58%;height:62%;left:8%;top:38%;background:#ff18c2}
+.b4{width:58%;height:62%;left:8%;top:38%;background:#1fd8a4}
 .b5{width:54%;height:58%;left:52%;top:46%;background:#7b5cff}
 .artwork::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;z-index:1;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.5'/></svg>")}
@@ -267,7 +273,7 @@ header.scrolled .nav{box-shadow:0 1px 1px var(--glass-shadow),0 18px 40px -14px 
 .band-glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.42;z-index:0}
 .g1{width:340px;height:340px;left:-60px;top:-120px;background:#ff5d1f}
 .g2{width:300px;height:300px;right:-40px;bottom:-140px;background:#7b5cff}
-.g3{width:260px;height:260px;left:42%;bottom:-160px;background:#ff18c2}
+.g3{width:260px;height:260px;left:42%;bottom:-160px;background:#1fd8a4}
 .band .shader-canvas{z-index:1;opacity:.7}
 .band-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(180deg,
@@ -316,7 +322,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
 
 <header>
   <nav class="nav">
-    <a href="#top" class="brand"><canvas class="mark-canvas" width="12" height="12" aria-hidden="true"></canvas>magenta club</a>
+    <a href="#top" class="brand"><canvas class="mark-canvas" width="12" height="12" aria-hidden="true"></canvas>gen8</a>
     <div class="nav-links" id="navLinks">
       <span class="nav-ind" id="navInd" aria-hidden="true"></span>
       <a href="#why">Why</a>
@@ -631,7 +637,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
       </article>
 
       <article class="tcard" tabindex="0">
-        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#3ea8ff,#ff18c2)"><span>LF</span></div>
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#3ea8ff,#1fd8a4)"><span>LF</span></div>
         <div class="tinfo">
           <div class="trow"><h3>Leo Fischer</h3><span class="ttag">PD</span></div>
           <div class="trole">Senior Product Designer</div>
@@ -640,7 +646,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
       </article>
 
       <article class="tcard" tabindex="0">
-        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ff18c2,#7b5cff)"><span>PA</span></div>
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#1fd8a4,#7b5cff)"><span>PA</span></div>
         <div class="tinfo">
           <div class="trow"><h3>Priya Anand</h3><span class="ttag">PD</span></div>
           <div class="trole">Senior Product Designer</div>
@@ -667,7 +673,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
       </article>
 
       <article class="tcard" tabindex="0">
-        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ff18c2,#ffb020)"><span>OL</span></div>
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#1fd8a4,#ffb020)"><span>OL</span></div>
         <div class="tinfo">
           <div class="trow"><h3>Oscar Lindqvist</h3><span class="ttag">PD</span></div>
           <div class="trole">Senior Product Designer</div>
@@ -685,7 +691,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
       </article>
 
       <article class="tcard" tabindex="0">
-        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ff5d1f,#ff18c2)"><span>FN</span></div>
+        <div class="tphoto tavatar" style="background:linear-gradient(135deg,#ff5d1f,#1fd8a4)"><span>FN</span></div>
         <div class="tinfo">
           <div class="trow"><h3>Felix Novak</h3><span class="ttag">PD</span></div>
           <div class="trole">Senior Product Designer</div>
@@ -716,7 +722,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-col">
-        <div class="brand" style="margin-bottom:10px"><canvas class="mark-canvas" width="12" height="12" aria-hidden="true"></canvas>magenta club</div>
+        <div class="brand" style="margin-bottom:10px"><canvas class="mark-canvas" width="12" height="12" aria-hidden="true"></canvas>gen8</div>
         <p class="muted" style="font-size:14px;max-width:32ch">A craft-led studio of senior PMs and PDs, embedded in AI-led start ups and scale ups.</p>
       </div>
       <div class="foot-col">
@@ -731,12 +737,12 @@ footer{border-top:1px solid var(--border);padding-top:56px}
       <div class="foot-col">
         <h4>Contact</h4>
         <a href="#" class="js-calendly">Book a call</a>
-        <a href="mailto:hello@magenta.club">hello@magenta.club</a>
+        <a href="mailto:hello@gen8.club">hello@gen8.club</a>
         <a href="#">LinkedIn</a>
       </div>
     </div>
-    <div class="wordmark">magenta club</div>
-    <div class="foot-bar"><span>© 2026 Magenta Club</span><span>London</span></div>
+    <div class="wordmark">gen8</div>
+    <div class="foot-bar"><span>© 2026 Gen8</span><span>London</span></div>
   </div>
 </footer>
 
@@ -744,7 +750,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
 /* ─── Calendly: paste your link here once the studio name is settled ─── */
 var CALENDLY_URL = "https://calendly.com/hellothebury/30min";
 document.querySelectorAll('.js-calendly').forEach(function(a){
-  a.setAttribute('href', CALENDLY_URL || 'mailto:hello@magenta.club?subject=Book%20a%20call');
+  a.setAttribute('href', CALENDLY_URL || 'mailto:hello@gen8.club?subject=Book%20a%20call');
   if(CALENDLY_URL){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); }
 });
 
@@ -1017,7 +1023,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 /* ══════════════════════════════════════════════════════════════
    PIXEL MARK — the brand mark rotates through generated,
    pixel-art bust silhouettes of the pod (one per team member),
-   dissolving from one to the next in magenta. Deterministic per
+   dissolving from one to the next in the accent colour. Deterministic per
    name, so the same person always renders the same portrait.
    ══════════════════════════════════════════════════════════════ */
 (function(){
@@ -1100,7 +1106,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
     var current = profiles[0].map(function(row){ return row.slice(); });
 
     function accent(){
-      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#ff18c2';
+      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#ff5d1f';
     }
 
     function draw(){
