@@ -82,12 +82,18 @@ header{position:sticky;top:14px;z-index:50;padding:0 var(--pad)}
 }
 header.scrolled .nav{box-shadow:0 1px 1px var(--glass-shadow),0 18px 40px -14px var(--glass-shadow),inset 0 1px 0 rgba(255,255,255,.4);transform:translateY(1px)}
 .brand{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;letter-spacing:-0.02em}
-.mark-canvas{
-  width:26px;height:26px;flex-shrink:0;border-radius:0;
-  background:var(--bg-card);border:1px solid var(--border);
-  image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:crisp-edges;
+.mark-blob{
+  width:40px;height:40px;flex-shrink:0;position:relative;
   animation:markGlow 3.6s ease-in-out infinite;
 }
+.mark-blob-inner{position:absolute;inset:0;filter:blur(2.4px) contrast(26)}
+.gcell{
+  position:absolute;width:7px;height:7px;border-radius:3px;background:var(--fg);
+  transform:scale(0);opacity:0;
+  transition:transform .6s cubic-bezier(.34,1.56,.64,1),opacity .4s ease;
+}
+.gcell.on{transform:scale(1);opacity:1}
+@media(prefers-reduced-motion:reduce){.gcell{transition:none}}
 @keyframes markGlow{
   0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 0%,transparent)}
   50%{box-shadow:0 0 14px 2px color-mix(in srgb,var(--accent) 35%,transparent)}
@@ -322,7 +328,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
 
 <header>
   <nav class="nav">
-    <a href="#top" class="brand"><canvas class="mark-canvas" width="12" height="12" aria-hidden="true"></canvas>gen8</a>
+    <a href="#top" class="brand"><span class="mark-blob" aria-hidden="true"></span>gen8</a>
     <div class="nav-links" id="navLinks">
       <span class="nav-ind" id="navInd" aria-hidden="true"></span>
       <a href="#why">Why</a>
@@ -722,7 +728,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-col">
-        <div class="brand" style="margin-bottom:10px"><canvas class="mark-canvas" width="12" height="12" aria-hidden="true"></canvas>gen8</div>
+        <div class="brand" style="margin-bottom:10px"><span class="mark-blob" aria-hidden="true"></span>gen8</div>
         <p class="muted" style="font-size:14px;max-width:32ch">A craft-led studio of senior PMs and PDs, embedded in AI-led start ups and scale ups.</p>
       </div>
       <div class="foot-col">
@@ -1021,147 +1027,69 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 })();
 
 /* ══════════════════════════════════════════════════════════════
-   PIXEL MARK — the brand mark rotates through generated,
-   pixel-art bust silhouettes of the pod (one per team member),
-   dissolving from one to the next in the accent colour. Deterministic per
-   name, so the same person always renders the same portrait.
+   GOO MARK — the brand mark morphs between a small library of
+   blobby pixel compositions (a face, a figure-eight, an abstract
+   cluster, a cross) using the classic blur+contrast "goo" filter
+   so adjacent cells fuse into one continuous rounded shape instead
+   of staying as separate squares.
    ══════════════════════════════════════════════════════════════ */
 (function(){
-  var canvases = document.querySelectorAll('.mark-canvas');
-  if(!canvases.length) return;
+  var wraps = document.querySelectorAll('.mark-blob');
+  if(!wraps.length) return;
 
-  var GRID = 12;
-  var NAMES = ['Ida','Volkan','Gokay','Umut','Maya Chen','Leo Fischer','Priya Anand',
-    'Tomas Reyes','Hana Kobayashi','Oscar Lindqvist','Zara Hussain','Felix Novak'];
+  var COLS = 5, ROWS = 5, CELL = 8;
   var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function strSeed(s){ var h=0; for(var i=0;i<s.length;i++){ h=(Math.imul(31,h)+s.charCodeAt(i))|0; } return h; }
-  function mulberry32(a){
-    return function(){
-      a |= 0; a = (a + 0x6D2B79F5) | 0;
-      var t = Math.imul(a ^ (a >>> 15), 1 | a);
-      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-  }
+  var FRAMES = [
+    [[1,1],[1,3],[3,1],[3,2],[3,3]],
+    [[0,1],[0,2],[1,0],[1,3],[2,1],[2,2],[3,0],[3,3],[4,1],[4,2]],
+    [[0,0],[0,1],[1,1],[1,2],[2,2],[2,3],[3,1],[4,1]],
+    [[0,2],[1,0],[1,1],[1,2],[1,3],[1,4],[2,2],[3,2],[4,2]]
+  ];
 
-  function generateBust(name){
-    var rand = mulberry32(strSeed(name));
-    var g = [];
-    for(var y=0;y<GRID;y++){ g.push(new Array(GRID).fill(false)); }
-
-    var cx = GRID/2;
-    var headCy = 3.6 + rand()*0.5;
-    var headR  = 2.7 + rand()*0.7;
-    var shoulderTop = headCy + headR + 1.1;
-    var maxW = 8 + rand()*3;
-    var neckW = 1.6 + rand()*0.8;
-    var ellCy = shoulderTop + (GRID-shoulderTop)*0.15;
-    var ellRy = (GRID-shoulderTop)*1.35;
-
-    for(var y2=0;y2<GRID;y2++){
-      for(var x=0;x<GRID;x++){
-        var dx = (x+0.5) - cx, dy = (y2+0.5) - headCy;
-        var inHead = (dx*dx)/(headR*headR) + (dy*dy)/((headR*1.12)*(headR*1.12)) <= 1;
-
-        var inNeck = false;
-        if(y2 >= headCy+headR-0.6 && y2 < shoulderTop){
-          inNeck = Math.abs((x+0.5)-cx) <= neckW/2;
-        }
-
-        var inShoulder = false;
-        if(y2 >= shoulderTop){
-          var ex = ((x+0.5)-cx)/(maxW/2);
-          var ey = ((y2+0.5)-ellCy)/ellRy;
-          inShoulder = (ex*ex + ey*ey) <= 1;
-        }
-
-        g[y2][x] = inHead || inNeck || inShoulder;
+  function buildGrid(wrap){
+    var inner = document.createElement('span');
+    inner.className = 'mark-blob-inner';
+    var cells = [];
+    for(var r=0;r<ROWS;r++){
+      for(var c=0;c<COLS;c++){
+        var cell = document.createElement('span');
+        cell.className = 'gcell';
+        cell.style.left = (c*CELL) + 'px';
+        cell.style.top  = (r*CELL) + 'px';
+        inner.appendChild(cell);
+        cells.push(cell);
       }
     }
-
-    var crownTop = Math.max(0, Math.round(headCy - headR));
-    for(var x2=0;x2<GRID;x2++){
-      if(g[crownTop] && g[crownTop][x2] && rand() < 0.35) g[crownTop][x2] = false;
-      if(crownTop+1 < GRID && rand() < 0.12) g[crownTop+1][x2] = true;
-    }
-
-    var holes = 2 + Math.floor(rand()*2);
-    for(var h=0; h<holes; h++){
-      var hx = Math.floor(rand()*GRID), hy = Math.floor(2+rand()*(GRID-3));
-      if(g[hy] && g[hy][hx]) g[hy][hx] = false;
-    }
-
-    return g;
+    wrap.appendChild(inner);
+    return cells;
   }
 
-  function initMark(canvas){
-    var ctx = canvas.getContext('2d');
-    if(!ctx) return;
-    ctx.imageSmoothingEnabled = false;
+  function applyFrame(cells, frame){
+    var on = {};
+    frame.forEach(function(rc){ on[rc[0]+'_'+rc[1]] = true; });
+    var i = 0;
+    for(var r=0;r<ROWS;r++){
+      for(var c=0;c<COLS;c++){
+        cells[i].classList.toggle('on', !!on[r+'_'+c]);
+        i++;
+      }
+    }
+  }
 
-    var order = NAMES.slice();
+  wraps.forEach(function(wrap){
+    var cells = buildGrid(wrap);
     var idx = 0;
-    var profiles = order.map(generateBust);
-    var current = profiles[0].map(function(row){ return row.slice(); });
-
-    function accent(){
-      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#ff5d1f';
-    }
-
-    function draw(){
-      ctx.clearRect(0,0,GRID,GRID);
-      ctx.fillStyle = accent();
-      for(var y=0;y<GRID;y++){
-        for(var x=0;x<GRID;x++){
-          if(current[y][x]) ctx.fillRect(x,y,1,1);
-        }
-      }
-    }
-
-    draw();
+    applyFrame(cells, FRAMES[0]);
     if(REDUCED) return;
 
-    function transitionTo(target, done){
-      var diffs = [];
-      for(var y=0;y<GRID;y++){
-        for(var x=0;x<GRID;x++){
-          if(current[y][x] !== target[y][x]) diffs.push([x,y]);
-        }
-      }
-      for(var i=diffs.length-1;i>0;i--){
-        var j=Math.floor(Math.random()*(i+1));
-        var t=diffs[i]; diffs[i]=diffs[j]; diffs[j]=t;
-      }
-      var steps = 9, step = 0;
-      var perStep = Math.max(1, Math.ceil(diffs.length/steps));
-
-      function tick(){
-        var slice = diffs.slice(step*perStep, (step+1)*perStep);
-        slice.forEach(function(c){ current[c[1]][c[0]] = target[c[1]][c[0]]; });
-        draw();
-        step++;
-        if(step*perStep < diffs.length){
-          setTimeout(tick, 38);
-        } else {
-          current = target.map(function(row){ return row.slice(); });
-          draw();
-          if(done) done();
-        }
-      }
-      tick();
-    }
-
     function cycle(){
-      idx = (idx+1) % profiles.length;
-      transitionTo(profiles[idx], function(){
-        setTimeout(cycle, 2000);
-      });
+      idx = (idx+1) % FRAMES.length;
+      applyFrame(cells, FRAMES[idx]);
+      setTimeout(cycle, 2200);
     }
-    setTimeout(cycle, 2000);
-  }
-
-  canvases.forEach(initMark);
+    setTimeout(cycle, 2200);
+  });
 })();
 
 /* ─── who we work with: tabs ─── */
