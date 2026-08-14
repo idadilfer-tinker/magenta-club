@@ -326,9 +326,36 @@ footer{border-top:1px solid var(--border);padding-top:56px}
   .tcard:hover{flex-grow:1}
   .tcard .tcopy{max-height:100px;opacity:1;margin-top:9px}
 }
+
+/* ═══ mobile footer reveal — footer pins to the bottom of the screen
+   in the brand orange and slides into view as you scroll past the
+   page content, echoing universaleverything.com's mobile footer ═══ */
+@media(max-width:768px){
+  .page-wrap{
+    position:relative;z-index:1;
+    background-color:var(--bg);
+    background-image:
+      linear-gradient(90deg,var(--paper-line) 1px,transparent 1px),
+      linear-gradient(0deg,var(--paper-line) 1px,transparent 1px);
+    background-size:116px 116px;
+  }
+  footer{
+    position:fixed;left:0;bottom:0;width:100%;z-index:0;
+    max-height:100vh;overflow-y:auto;
+    background:var(--accent);color:#fff;border-top:none;
+  }
+  footer .foot-col h4{color:rgba(255,255,255,.75)}
+  footer .foot-col a{color:#fff}
+  footer .foot-col a:hover{color:rgba(255,255,255,.7)}
+  footer .muted{color:rgba(255,255,255,.85)}
+  footer .foot-bar{border-top-color:rgba(255,255,255,.25);color:rgba(255,255,255,.85)}
+  footer .mark-canvas{filter:brightness(0) invert(1)}
+}
 </style>
 </head>
 <body>
+
+<div class="page-wrap">
 
 <header>
   <nav class="nav">
@@ -695,6 +722,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
   </div>
 </section>
 
+</div>
 <!-- ══════════ FOOTER ══════════ -->
 <footer>
   <div class="wrap">
@@ -1302,6 +1330,30 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 (function(){
   var m=document.getElementById('marquee'); if(!m) return;
   m.appendChild(m.firstElementChild.cloneNode(true));
+})();
+
+/* ─── mobile footer reveal: reserve exactly the footer's height at
+   the end of the page so the pinned orange footer slides into view
+   as you scroll past the content, then release it back to normal
+   flow above the 768px breakpoint ─── */
+(function(){
+  var wrap = document.querySelector('.page-wrap');
+  var foot = document.querySelector('footer');
+  if(!wrap || !foot) return;
+  var mq = window.matchMedia('(max-width:768px)');
+  function sync(){
+    if(mq.matches){
+      wrap.style.marginBottom = foot.offsetHeight + 'px';
+    } else {
+      wrap.style.marginBottom = '';
+    }
+  }
+  sync();
+  window.addEventListener('resize', sync);
+  window.addEventListener('load', sync);
+  if(mq.addEventListener){ mq.addEventListener('change', sync); }
+  setTimeout(sync, 300);
+  setTimeout(sync, 1200);
 })();
 
 </script>
