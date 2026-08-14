@@ -129,8 +129,8 @@ header.scrolled .nav{box-shadow:0 1px 1px var(--glass-shadow),0 18px 40px -14px 
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.5'/></svg>")}
 /* WebGL flow shader — fills the box opaquely once it boots; blobs above stay as a no-JS/no-WebGL fallback */
 .shader-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
-/* reactive white dither overlay on the hero shader — follows the pointer */
-.hero-dither{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:2;pointer-events:none;mix-blend-mode:screen;opacity:.3}
+/* reactive dither overlay on the hero shader — squares match the page background, follows the pointer */
+.hero-dither{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:2;pointer-events:none;mix-blend-mode:normal;opacity:1}
 
 /* ═══════════════════ CAROUSEL ═══════════════════ */
 .trusted{padding:30px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
@@ -990,7 +990,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
     mouse.y += (mouse.ty - mouse.y) * .09;
     hover.v += (hover.target - hover.v) * .06;
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#faf8f4';
     var c = cell * dpr;
     var cols = Math.ceil(w / c) + 1;
     var rows = Math.ceil(h / c) + 1;
