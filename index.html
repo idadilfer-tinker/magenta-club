@@ -1367,23 +1367,78 @@ document.getElementById('themeBtn').addEventListener('click',function(){
     return g;
   }
 
-  function drawPortrait(canvas){
+  var BAYER4 = [
+    [0,8,2,10],
+    [12,4,14,6],
+    [3,11,1,9],
+    [15,7,13,5]
+  ].map(function(row){ return row.map(function(v){ return (v+0.5)/16; }); });
+
+  function pixHash(x,y){
+    var v = Math.sin(x*12.9898 + y*78.233) * 43758.5453;
+    return v - Math.floor(v);
+  }
+
+  function drawPortrait(canvas, time, accent, ink){
     var ctx = canvas.getContext('2d');
     if(!ctx) return;
     ctx.imageSmoothingEnabled = false;
-    var name = canvas.getAttribute('data-name') || '';
-    var grid = generateBust(name);
-    var accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#ff5d1f';
+    var grid = canvas.__grid;
+    if(!grid) return;
+    var card = canvas.closest('.tcard');
+    var speed = (card && card.__thover) ? 1.6 : 0.6;
     ctx.clearRect(0,0,GRID,GRID);
-    ctx.fillStyle = accent;
     for(var y=0;y<GRID;y++){
       for(var x=0;x<GRID;x++){
-        if(grid[y][x]) ctx.fillRect(x,y,1,1);
+        if(!grid[y][x]) continue;
+        var phase = pixHash(x,y);
+        var val = 0.5 + 0.5*Math.sin(time*speed + phase*6.28318);
+        var bayer = BAYER4[y%4][x%4];
+        ctx.fillStyle = (val > bayer) ? accent : ink;
+        ctx.fillRect(x,y,1,1);
       }
     }
   }
 
-  canvases.forEach(drawPortrait);
+  canvases.forEach(function(c){
+    c.__grid = generateBust(c.getAttribute('data-name') || '');
+    var card = c.closest('.tcard');
+    if(card){
+      card.addEventListener('pointerenter', function(){ card.__thover = true; });
+      card.addEventListener('pointerleave', function(){ card.__thover = false; });
+    }
+  });
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rootStyle = getComputedStyle(document.documentElement);
+
+  if(reduceMotion){
+    var accent0 = rootStyle.getPropertyValue('--accent').trim() || '#ff5d1f';
+    var ink0 = rootStyle.getPropertyValue('--bg-inverse').trim() || '#0b0b0c';
+    canvases.forEach(function(c){ drawPortrait(c, 0, accent0, ink0); });
+  } else {
+    var visible = true;
+    if('IntersectionObserver' in window){
+      var teamDeck = document.querySelector('.team-deck');
+      if(teamDeck){
+        new IntersectionObserver(function(entries){
+          entries.forEach(function(en){ visible = en.isIntersecting; });
+        }, {threshold: 0}).observe(teamDeck);
+      }
+    }
+    var last = 0;
+    function loop(t){
+      var time = t/1000;
+      if(visible && (time-last) > 0.08){
+        last = time;
+        var accent = rootStyle.getPropertyValue('--accent').trim() || '#ff5d1f';
+        var ink = rootStyle.getPropertyValue('--bg-inverse').trim() || '#0b0b0c';
+        canvases.forEach(function(c){ drawPortrait(c, time, accent, ink); });
+      }
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  }
 })();
 
 /* ─── who we work with: tabs ─── */
