@@ -1414,7 +1414,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 
   if(reduceMotion){
     var accent0 = rootStyle.getPropertyValue('--accent').trim() || '#ff5d1f';
-    var ink0 = rootStyle.getPropertyValue('--bg-inverse').trim() || '#0b0b0c';
+    var ink0 = '#ffdab9';
     canvases.forEach(function(c){ drawPortrait(c, 0, accent0, ink0); });
   } else {
     var visible = true;
@@ -1432,7 +1432,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
       if(visible && (time-last) > 0.08){
         last = time;
         var accent = rootStyle.getPropertyValue('--accent').trim() || '#ff5d1f';
-        var ink = rootStyle.getPropertyValue('--bg-inverse').trim() || '#0b0b0c';
+        var ink = '#ffdab9';
         canvases.forEach(function(c){ drawPortrait(c, time, accent, ink); });
       }
       requestAnimationFrame(loop);
