@@ -286,6 +286,15 @@ header.scrolled .nav{box-shadow:0 1px 1px var(--glass-shadow),0 18px 40px -14px 
 .feed-placeholder p{font-weight:600;color:var(--fg);margin:0;font-size:14px}
 .feed-placeholder span{font-size:12.5px;line-height:1.5;max-width:26ch}
 
+/* ═══════════════════ HIRING ═══════════════════ */
+.hire-band{border:1px solid var(--glass-border);border-radius:var(--r-lg);background:var(--glass-bg);
+  backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);
+  box-shadow:0 1px 2px var(--glass-shadow);padding:clamp(28px,5vw,56px);display:grid;
+  grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:start}
+.hire-band p{color:var(--fg-muted);line-height:1.6;margin:0 0 16px}
+.hire-band .btn{margin-top:8px}
+@media (max-width:820px){.hire-band{grid-template-columns:1fr}}
+
 /* ═══════════════════ CTA BAND ═══════════════════ */
 .band{position:relative;overflow:hidden;border-radius:var(--r-xl);
   background:var(--bg-inverse);color:var(--fg-inverse);padding:clamp(48px,7vw,88px);text-align:center}
@@ -383,6 +392,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
       <a href="#what">What we do</a>
       <a href="#team">Team</a>
       <a href="#feed">Feed</a>
+      <a href="#hiring">Careers</a>
       <a href="#contact">Contact</a>
     </div>
     <div class="nav-right">
@@ -749,6 +759,23 @@ footer{border-top:1px solid var(--border);padding-top:56px}
       <div class="feed-card feed-placeholder">
         <p>From the design world</p>
         <span>Paste a post from a designer you follow</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ HIRING ══════════ -->
+<section class="section" id="hiring">
+  <div class="wrap">
+    <div class="hire-band rv">
+      <div>
+        <h2>Designer hiring designers.</h2>
+        <p class="lead">No rigid job description.</p>
+      </div>
+      <div>
+        <p>If you're a senior product designer—specialist or generalist—exhausted by seeing the design role squeezed between other disciplines and ever-expanding expectations, join us.</p>
+        <p>GEN8 is building a more flexible, sustainable way for designers to do great work.</p>
+        <a href="mailto:hello@gen8design.com" class="btn btn-primary">hello@gen8design.com <span class="arw">→</span></a>
       </div>
     </div>
   </div>
