@@ -390,6 +390,10 @@ footer{border-top:1px solid var(--border);padding-top:56px}
   footer .foot-bar{border-top-color:rgba(255,255,255,.25);color:rgba(255,255,255,.85)}
   footer .mark-canvas{filter:brightness(0) invert(1)}
 }
+
+.band .vc-offer-list{position:relative;z-index:2;text-align:left;max-width:480px;margin:0 auto 30px}
+.band .vc-offer-list li{color:color-mix(in srgb,var(--fg-inverse) 82%,transparent)}
+.band .vc-offer-list li svg{color:var(--fg-inverse)}
 </style>
 </head>
 <body>
@@ -751,6 +755,24 @@ footer{border-top:1px solid var(--border);padding-top:56px}
     </div>
   </div>
 </section>
+ 
+<!-- VC PARTNER -->
+<section class="section" id="vc-partner">
+  <div class="wrap">
+    <div class="band rv">
+      <span class="band-glow g1"></span><span class="band-glow g2"></span><span class="band-glow g3"></span>
+      <canvas class="shader-canvas" id="vcFlowShader" aria-hidden="true"></canvas>
+      <div class="band-scrim"></div>
+      <h2>VC Design Partner. Your portfolio's competitive advantage.</h2>
+      <ul class="offer-list vc-offer-list">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Embedded senior design support across your portfolio, on call when a founder needs it</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Vetted, senior product designers - no ramp-up, no hiring risk</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Preferential rates and priority scheduling for portfolio companies</li>
+      </ul>
+      <a href="#" class="btn btn-primary js-calendly">Talk to us about your portfolio <span class="arw">&#8594;</span></a>
+    </div>
+  </div>
+</section> 
 <!-- ══════════ LIVE FEED ══════════ -->
 <section class="section" id="feed">
   <div class="wrap">
@@ -1059,6 +1081,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 
   attachFlowShader(document.getElementById('heroShader'));
   attachFlowShader(document.getElementById('ctaShader'));
+      attachFlowShader(document.getElementById('vcFlowShader'));
 })();
 
 /* ══════════════════════════════════════════════════════════════
