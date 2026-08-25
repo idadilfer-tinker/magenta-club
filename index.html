@@ -395,6 +395,9 @@ footer{border-top:1px solid var(--border);padding-top:56px}
 .band .vc-offer-list{position:relative;z-index:2;text-align:left;max-width:480px;margin:0 auto 30px}
 .band .vc-offer-list li{color:color-mix(in srgb,var(--fg-inverse) 82%,transparent)}
 .band .vc-offer-list li svg{color:var(--fg-inverse)}
+
+.rotate-word{display:inline-block;color:var(--accent);transition:opacity .45s ease,transform .45s ease}
+.rotate-word.rotate-out{opacity:0;transform:translateY(8px)}
 </style>
 </head>
 <body>
@@ -434,8 +437,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <h1 class="rv">The design firepower you need for scaling
-</h1>
+      <h1 class="rv">Your team's design <span class="rotate-word" id="heroRotate">firepower to scale</span></h1>
       <p class="lead rv">A craft-led pod of senior product designers and managers who ship the work—and build the systems to keep it moving. Built for startups and scale-ups.</p>
       <div class="hero-cta rv">
         <a href="#" class="btn btn-primary js-calendly">Book a product design call <span class="arw">→</span></a>
@@ -1084,6 +1086,21 @@ document.getElementById('themeBtn').addEventListener('click',function(){
   attachFlowShader(document.getElementById('heroShader'));
   attachFlowShader(document.getElementById('ctaShader'));
       attachFlowShader(document.getElementById('vcFlowShader'));
+
+      (function(){
+        var el = document.getElementById('heroRotate');
+        if(!el) return;
+        var words = ['firepower to scale','partner for MVP validation','partner to attract capital','partner to capture market share fast'];
+        var i = 0;
+        setInterval(function(){
+          el.classList.add('rotate-out');
+          setTimeout(function(){
+            i = (i+1) % words.length;
+            el.textContent = words[i];
+            el.classList.remove('rotate-out');
+          }, 450);
+        }, 2600);
+      })();
 })();
 
 /* ══════════════════════════════════════════════════════════════
