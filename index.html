@@ -396,8 +396,9 @@ footer{border-top:1px solid var(--border);padding-top:56px}
 .band .vc-offer-list li{color:color-mix(in srgb,var(--fg-inverse) 82%,transparent)}
 .band .vc-offer-list li svg{color:var(--fg-inverse)}
 
-.rotate-word{display:inline-block;color:var(--accent);transition:opacity .45s ease,transform .45s ease}
-.rotate-word.rotate-out{opacity:0;transform:translateY(8px)}
+.rotate-line{display:block;font-size:clamp(20px,2.4vw,28px);font-weight:600;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;margin-top:10px;transition:opacity .45s ease,transform .45s ease}
+.rotate-line.rotate-out{opacity:0;transform:translateY(6px)}
+@media(max-width:480px){.rotate-line{white-space:normal;font-size:clamp(17px,4.6vw,21px)}}
 </style>
 </head>
 <body>
@@ -437,7 +438,7 @@ footer{border-top:1px solid var(--border);padding-top:56px}
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <h1 class="rv">Your team's design <span class="rotate-word" id="heroRotate">firepower to scale</span></h1>
+      <h1 class="rv">Your team's<br>design<span class="rotate-line" id="heroRotate">firepower to scale</span></h1>
       <p class="lead rv">A craft-led pod of senior product designers and managers who ship the work—and build the systems to keep it moving. Built for startups and scale-ups.</p>
       <div class="hero-cta rv">
         <a href="#" class="btn btn-primary js-calendly">Book a product design call <span class="arw">→</span></a>
