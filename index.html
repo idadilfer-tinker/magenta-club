@@ -1080,9 +1080,10 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 })();
 
 /* ══════════════════════════════════════════════════════════════
-   HERO BLOOM OVERLAY — an orange-to-white halftone "8" that sits
-   dim and idle over the hero shader, then blooms outward from its
-   center on pointer hover, echoing the GEN8 mark and accent colour.
+   HERO BLOOM OVERLAY — an orange-to-white halftone "0 → 1  ready?"
+   mark that sits dim and idle over the hero shader, then blooms
+   outward from its center on pointer hover, echoing the GEN8 mark
+   and accent colour.
    ══════════════════════════════════════════════════════════════ */
 (function(){
   var host = document.querySelector('.artwork');
@@ -1114,16 +1115,33 @@ document.getElementById('themeBtn').addEventListener('click',function(){
   host.addEventListener('pointerenter', function(){ hover.target = 1; });
   host.addEventListener('pointerleave', function(){ hover.target = 0; });
 
-  function eightMask(nx, ny, t){
-    var wob = Math.sin(t * 0.4) * 0.01;
-    var topR = 0.30 + wob, topT = 0.20;
-    var botR = 0.42 - wob, botT = 0.24;
-    var dTop = Math.abs(Math.hypot(nx, ny + 0.34) - topR);
-    var maskTop = Math.max(0, 1 - dTop / (topT * 0.5));
-    var dBot = Math.abs(Math.hypot(nx, ny - 0.36) - botR);
-    var maskBot = Math.max(0, 1 - dBot / (botT * 0.5));
-    var waist = Math.max(0, 1 - Math.hypot(nx, ny - 0.02) / 0.12);
-    return Math.min(1, Math.max(maskTop, Math.max(maskBot, waist * 0.9)));
+  // Build a text mask once: "0 → 1  ready?" rendered white-on-black,
+  // sampled per-cell to drive the halftone bloom.
+  var TEXT = '0 → 1  ready?';
+  var tex = document.createElement('canvas');
+  var tctx = tex.getContext('2d');
+  var FONT_PX = 180;
+  tctx.font = '700 ' + FONT_PX + 'px Inter, sans-serif';
+  var pad = FONT_PX * 0.3;
+  var textW = Math.ceil(tctx.measureText(TEXT).width + pad * 2);
+  var textH = Math.ceil(FONT_PX * 1.5);
+  tex.width = textW; tex.height = textH;
+  tctx.fillStyle = '#000'; tctx.fillRect(0,0,textW,textH);
+  tctx.font = '700 ' + FONT_PX + 'px Inter, sans-serif';
+  tctx.fillStyle = '#fff';
+  tctx.textAlign = 'center'; tctx.textBaseline = 'middle';
+  tctx.fillText(TEXT, textW/2, textH/2 + FONT_PX*0.04);
+  var texData = tctx.getImageData(0,0,textW,textH).data;
+  var textAspect = textW / textH;
+  var halfW = 1.3, halfH = halfW / textAspect;
+
+  function textMask(nx, ny){
+    var u = (nx / halfW + 1) / 2;
+    var v = (ny / halfH + 1) / 2;
+    if(u < 0 || u > 1 || v < 0 || v > 1) return 0;
+    var px = Math.min(textW - 1, Math.max(0, (u * textW) | 0));
+    var py = Math.min(textH - 1, Math.max(0, (v * textH) | 0));
+    return texData[(py * textW + px) * 4] / 255;
   }
 
   function drawFrame(t){
@@ -1134,20 +1152,21 @@ document.getElementById('themeBtn').addEventListener('click',function(){
     var c = cell * dpr;
     var cols = Math.ceil(w / c) + 1, rows = Math.ceil(h / c) + 1;
     var cx = w / 2, cy = h / 2, scale = Math.min(w, h) / 2 * 0.92;
-    var revealR = 0.05 + hover.v * 1.15;
+    var revealR = 0.05 + hover.v * 1.5;
     var ambient = 0.14;
     for(var row=0; row<rows; row++){
       for(var col=0; col<cols; col++){
         var px = col*c + c/2, py = row*c + c/2;
         var nx = (px-cx)/scale, ny = (py-cy)/scale;
         var rad = Math.hypot(nx, ny);
-        var mask = eightMask(nx, ny, t);
+        var mask = textMask(nx, ny);
+        if(mask < 0.05) continue;
         var gate = Math.max(0, Math.min(1, (revealR-rad)/0.18 + 0.5));
         var vis = Math.max(ambient*mask, mask*gate);
         if(vis < 0.02) continue;
         var size = c * (0.12 + vis*0.86);
         var r = size * 0.5;
-        var tc = Math.min(1, rad*1.3);
+        var tc = Math.min(1, rad*0.9);
         var cr = Math.round(WHITE[0] + (ORANGE[0]-WHITE[0]) * tc);
         var cg = Math.round(WHITE[1] + (ORANGE[1]-WHITE[1]) * tc);
         var cb = Math.round(WHITE[2] + (ORANGE[2]-WHITE[2]) * tc);
