@@ -1091,7 +1091,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
   if(!host || !canvas) return;
   var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ctx = canvas.getContext('2d');
-  var cell = 12;
+  var cell = 6;
   var w = 0, h = 0;
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
   var hover = {v:0, target:0};
@@ -1116,15 +1116,17 @@ document.getElementById('themeBtn').addEventListener('click',function(){
   host.addEventListener('pointerleave', function(){ hover.target = 0; });
 
   // Build a text mask once: "0 → 1  ready?" rendered white-on-black,
-  // sampled per-cell to drive the halftone bloom.
+  // sampled per-cell to drive the halftone bloom. High-res offscreen
+  // texture keeps the fine glyph detail (arrow, question mark)
+  // readable once halftoned at a fine dot pitch.
   var TEXT = '0 → 1  ready?';
   var tex = document.createElement('canvas');
   var tctx = tex.getContext('2d');
-  var FONT_PX = 180;
+  var FONT_PX = 240;
   tctx.font = '700 ' + FONT_PX + 'px Inter, sans-serif';
-  var pad = FONT_PX * 0.3;
+  var pad = FONT_PX * 0.25;
   var textW = Math.ceil(tctx.measureText(TEXT).width + pad * 2);
-  var textH = Math.ceil(FONT_PX * 1.5);
+  var textH = Math.ceil(FONT_PX * 1.4);
   tex.width = textW; tex.height = textH;
   tctx.fillStyle = '#000'; tctx.fillRect(0,0,textW,textH);
   tctx.font = '700 ' + FONT_PX + 'px Inter, sans-serif';
@@ -1153,24 +1155,24 @@ document.getElementById('themeBtn').addEventListener('click',function(){
     var cols = Math.ceil(w / c) + 1, rows = Math.ceil(h / c) + 1;
     var cx = w / 2, cy = h / 2, scale = Math.min(w, h) / 2 * 0.92;
     var revealR = 0.05 + hover.v * 1.5;
-    var ambient = 0.14;
+    var ambient = 0.16;
     for(var row=0; row<rows; row++){
       for(var col=0; col<cols; col++){
         var px = col*c + c/2, py = row*c + c/2;
         var nx = (px-cx)/scale, ny = (py-cy)/scale;
         var rad = Math.hypot(nx, ny);
         var mask = textMask(nx, ny);
-        if(mask < 0.05) continue;
+        if(mask < 0.12) continue;
         var gate = Math.max(0, Math.min(1, (revealR-rad)/0.18 + 0.5));
         var vis = Math.max(ambient*mask, mask*gate);
-        if(vis < 0.02) continue;
-        var size = c * (0.12 + vis*0.86);
+        if(vis < 0.03) continue;
+        var size = c * (0.2 + vis*0.78);
         var r = size * 0.5;
         var tc = Math.min(1, rad*0.9);
         var cr = Math.round(WHITE[0] + (ORANGE[0]-WHITE[0]) * tc);
         var cg = Math.round(WHITE[1] + (ORANGE[1]-WHITE[1]) * tc);
         var cb = Math.round(WHITE[2] + (ORANGE[2]-WHITE[2]) * tc);
-        ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (0.35 + vis*0.65) + ')';
+        ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + (0.4 + vis*0.6) + ')';
         ctx.beginPath();
         var x = px - size/2, y = py - size/2;
         if(ctx.roundRect){ ctx.roundRect(x, y, size, size, r); } else { ctx.rect(x, y, size, size); }
@@ -1190,6 +1192,17 @@ document.getElementById('themeBtn').addEventListener('click',function(){
     new IntersectionObserver(function(entries){
       entries.forEach(function(en){ visible = en.isIntersecting; });
     }, {threshold: 0}).observe(canvas);
+  }
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){
+      tctx.fillStyle = '#000'; tctx.fillRect(0,0,textW,textH);
+      tctx.font = '700 ' + FONT_PX + 'px Inter, sans-serif';
+      tctx.fillStyle = '#fff';
+      tctx.textAlign = 'center'; tctx.textBaseline = 'middle';
+      tctx.fillText(TEXT, textW/2, textH/2 + FONT_PX*0.04);
+      texData = tctx.getImageData(0,0,textW,textH).data;
+    });
   }
 
   resize();
