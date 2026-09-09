@@ -61,6 +61,13 @@
   .slide.subtle{background:var(--bg-subtle); color:var(--fg)}
 
   .inner{max-width:980px; margin:0 auto; width:100%}
+  .pillar-grid{display:grid; grid-template-columns:1fr 220px; gap:56px; align-items:center}
+  .pillar-visual{width:220px}
+  .pillar-visual svg{width:100%; height:auto; display:block}
+  @media (max-width:900px){
+    .pillar-grid{grid-template-columns:1fr}
+    .pillar-visual{width:150px; margin:28px auto 0}
+  }
   .eyebrow{
     font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
     color:var(--accent); margin:0 0 18px;
@@ -216,30 +223,82 @@
   </section>
 
   <section class="slide light">
-    <div class="inner">
-      <span class="num">01</span>
-      <h2>We don't place just a designer in your team. We place a design strategy in your product DNA.</h2>
-      <p class="lead">Every engagement starts with our full senior team in the room — not one junior generalist hoping to figure it out. From there, we embed the single product designer best matched to your stage for the first stretch of the build (the shape differs for a seed-stage startup versus a scaling team).</p>
-      <p class="lead"><strong>Not any senior designer will do. Not a junior one either.</strong> Startup design is its own craft, and we've built a team fluent in it.</p>
+    <div class="inner pillar-grid">
+      <div class="pillar-text">
+        <span class="num">01</span>
+        <h2>We don't place just a designer in your team. We place a design strategy in your product DNA.</h2>
+        <p class="lead">Every engagement starts with our full senior team in the room — not one junior generalist hoping to figure it out. From there, we embed the single product designer best matched to your stage for the first stretch of the build (the shape differs for a seed-stage startup versus a scaling team).</p>
+        <p class="lead"><strong>Not any senior designer will do. Not a junior one either.</strong> Startup design is its own craft, and we've built a team fluent in it.</p>
+      </div>
+      <div class="pillar-visual">
+        <svg viewBox="-6 -6 232 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="110" y="14" text-anchor="middle" font-size="9" font-weight="700" letter-spacing=".08em" fill="currentColor" opacity=".45">SENIOR TEAM</text>
+          <circle cx="42" cy="42" r="8" stroke="currentColor" stroke-width="1.4" opacity=".5"/>
+          <circle cx="78" cy="28" r="8" stroke="currentColor" stroke-width="1.4" opacity=".5"/>
+          <circle cx="114" cy="36" r="8" stroke="currentColor" stroke-width="1.4" opacity=".5"/>
+          <circle cx="150" cy="28" r="8" stroke="currentColor" stroke-width="1.4" opacity=".5"/>
+          <circle cx="182" cy="42" r="8" stroke="currentColor" stroke-width="1.4" opacity=".5"/>
+          <line x1="42" y1="50" x2="106" y2="163" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
+          <line x1="78" y1="36" x2="107" y2="163" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
+          <line x1="114" y1="44" x2="110" y2="163" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
+          <line x1="150" y1="36" x2="113" y2="163" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
+          <line x1="182" y1="50" x2="114" y2="163" stroke="currentColor" stroke-width="1.2" opacity=".3"/>
+          <circle cx="110" cy="172" r="17" fill="var(--accent)"/>
+          <text x="110" y="208" text-anchor="middle" font-size="9" font-weight="700" letter-spacing=".08em" fill="currentColor" opacity=".7">YOUR DESIGNER</text>
+        </svg>
+      </div>
     </div>
   </section>
 
   <section class="slide dark">
     <div class="dotfield"></div>
-    <div class="inner">
-      <span class="num">02</span>
-      <h2>We build the work — then we build what keeps building it.</h2>
-      <p class="lead">We ship the core product and brand design. Before we leave, we train AI agents on your product strategy and design DNA — so your team keeps producing on-brand work long after the engagement ends.</p>
-      <p class="lead">You don't re-buy design from scratch every quarter.</p>
+    <div class="inner pillar-grid">
+      <div class="pillar-text">
+        <span class="num">02</span>
+        <h2>We build the work — then we build what keeps building it.</h2>
+        <p class="lead">We ship the core product and brand design. Before we leave, we train AI agents on your product strategy and design DNA — so your team keeps producing on-brand work long after the engagement ends.</p>
+        <p class="lead">You don't re-buy design from scratch every quarter.</p>
+      </div>
+      <div class="pillar-visual">
+        <svg viewBox="-6 -6 232 232" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="14" font-size="9" font-weight="700" letter-spacing=".08em" fill="currentColor" opacity=".45">DESIGN SYSTEM</text>
+          <rect x="0" y="26" width="36" height="36" rx="6" stroke="currentColor" stroke-width="1.4" opacity=".45"/>
+          <rect x="46" y="26" width="36" height="36" rx="6" stroke="currentColor" stroke-width="1.4" opacity=".45"/>
+          <rect x="92" y="26" width="36" height="36" rx="6" fill="var(--accent)"/>
+          <rect x="0" y="72" width="36" height="36" rx="6" stroke="currentColor" stroke-width="1.4" opacity=".45"/>
+          <rect x="46" y="72" width="36" height="36" rx="6" stroke="currentColor" stroke-width="1.4" opacity=".45"/>
+          <rect x="92" y="72" width="36" height="36" rx="6" stroke="currentColor" stroke-width="1.4" opacity=".45"/>
+          <path d="M195 165a30 30 0 1 1 -8 -21" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <polygon points="189,138 190,152 176,146" fill="var(--accent)"/>
+          <text x="220" y="214" text-anchor="end" font-size="9" font-weight="700" letter-spacing=".08em" fill="currentColor" opacity=".7">AI KEEPS BUILDING</text>
+        </svg>
+      </div>
     </div>
   </section>
 
   <section class="slide light">
-    <div class="inner">
-      <span class="num">03</span>
-      <h2>We are onboarding and retention specialists.</h2>
-      <p class="lead">We own growth design across the customer lifecycle — shaping acquisition, activation, engagement, monetization, and retention as one system, not five disconnected hires.</p>
-      <p class="lead">We built our own tool to find and interview true early adopters the right way, so onboarding and education are designed to make the product stick — and you get the user insight that predicts retention before the metrics do.</p>
+    <div class="inner pillar-grid">
+      <div class="pillar-text">
+        <span class="num">03</span>
+        <h2>We are onboarding and retention specialists.</h2>
+        <p class="lead">We own growth design across the customer lifecycle — shaping acquisition, activation, engagement, monetization, and retention as one system, not five disconnected hires.</p>
+        <p class="lead">We built our own tool to find and interview true early adopters the right way, so onboarding and education are designed to make the product stick — and you get the user insight that predicts retention before the metrics do.</p>
+      </div>
+      <div class="pillar-visual">
+        <svg viewBox="-40 -8 300 236" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="120,37 194,91 166,178 74,178 46,91" stroke="currentColor" stroke-width="1.2" opacity=".25" fill="none"/>
+          <circle cx="120" cy="37" r="6" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+          <circle cx="194" cy="91" r="6" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+          <circle cx="166" cy="178" r="6" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+          <circle cx="74" cy="178" r="6" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+          <circle cx="46" cy="91" r="9" fill="var(--accent)"/>
+          <text x="120" y="22" text-anchor="middle" font-size="9" font-weight="700" letter-spacing=".06em" fill="currentColor" opacity=".6">ACQUISITION</text>
+          <text x="203" y="88" text-anchor="start" font-size="9" font-weight="700" letter-spacing=".06em" fill="currentColor" opacity=".6">ACTIVATION</text>
+          <text x="166" y="198" text-anchor="middle" font-size="9" font-weight="700" letter-spacing=".06em" fill="currentColor" opacity=".6">ENGAGEMENT</text>
+          <text x="74" y="198" text-anchor="middle" font-size="9" font-weight="700" letter-spacing=".06em" fill="currentColor" opacity=".6">MONETIZATION</text>
+          <text x="37" y="88" text-anchor="end" font-size="9" font-weight="700" letter-spacing=".06em" fill="var(--accent)">RETENTION</text>
+        </svg>
+      </div>
     </div>
   </section>
 
