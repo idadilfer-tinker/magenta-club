@@ -1124,13 +1124,13 @@ document.getElementById('themeBtn').addEventListener('click',function(){
   var tex = document.createElement('canvas');
   var tctx = tex.getContext('2d');
   var FONT_PX = 240;
-  tctx.font = '700 ' + FONT_PX + 'px 'General Sans', sans-serif';
+  tctx.font = '700 ' + FONT_PX + 'px "General Sans", sans-serif';
   var pad = FONT_PX * 0.25;
   var textW = Math.ceil(tctx.measureText(TEXT).width + pad * 2);
   var textH = Math.ceil(FONT_PX * 1.4);
   tex.width = textW; tex.height = textH;
   tctx.fillStyle = '#000'; tctx.fillRect(0,0,textW,textH);
-  tctx.font = '700 ' + FONT_PX + 'px 'General Sans', sans-serif';
+  tctx.font = '700 ' + FONT_PX + 'px "General Sans", sans-serif';
   tctx.fillStyle = '#fff';
   tctx.textAlign = 'center'; tctx.textBaseline = 'middle';
   tctx.fillText(TEXT, textW/2, textH/2 + FONT_PX*0.04);
@@ -1198,7 +1198,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
   if(document.fonts && document.fonts.ready){
     document.fonts.ready.then(function(){
       tctx.fillStyle = '#000'; tctx.fillRect(0,0,textW,textH);
-      tctx.font = '700 ' + FONT_PX + 'px 'General Sans', sans-serif';
+      tctx.font = '700 ' + FONT_PX + 'px "General Sans", sans-serif';
       tctx.fillStyle = '#fff';
       tctx.textAlign = 'center'; tctx.textBaseline = 'middle';
       tctx.fillText(TEXT, textW/2, textH/2 + FONT_PX*0.04);
