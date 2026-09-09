@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Our Edge — GEN8</title>
+<meta name="description" content="Why design is where portfolio companies waste time and capital — and the three things GEN8 does differently for startups and scale-ups." />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf8f4; --bg-subtle:#f5f2ec; --bg-card:#f0ede5; --bg-inverse:#0b0b0c;
+    --fg:#09090b; --fg-muted:#71717a; --fg-inverse:#ffffff; --fg-inverse-muted:rgba(255,255,255,.62);
+    --border:#e4e0d6; --border-dark:rgba(255,255,255,.14);
+    --accent:#ff5d1f; --accent-soft:#ffdab9;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg); color:var(--fg);
+    scroll-snap-type:y mandatory; overflow-y:scroll; height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+  a{color:inherit}
+
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px clamp(20px,4vw,56px);
+    mix-blend-mode:difference;
+  }
+  .topbar .word{font-weight:800; font-size:16px; letter-spacing:.02em; color:#fff; text-decoration:none}
+  .topbar .cta{
+    font-size:13px; font-weight:600; color:#fff; text-decoration:none;
+    border:1px solid rgba(255,255,255,.7); padding:8px 16px; border-radius:999px;
+  }
+
+  .dots{
+    position:fixed; right:clamp(14px,2.4vw,32px); top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:10px; z-index:50;
+  }
+  .dot{
+    width:7px; height:7px; border-radius:50%; background:rgba(120,120,120,.35);
+    border:none; padding:0; cursor:pointer; transition:transform .25s ease, background .25s ease;
+  }
+  .dot.active{background:var(--accent); transform:scale(1.7)}
+
+  section.slide{
+    scroll-snap-align:start;
+    min-height:100vh; width:100%;
+    display:flex; align-items:center;
+    position:relative;
+    padding:120px clamp(24px,7vw,120px) 80px;
+  }
+  .slide.dark{background:var(--bg-inverse); color:var(--fg-inverse)}
+  .slide.light{background:var(--bg); color:var(--fg)}
+  .slide.subtle{background:var(--bg-subtle); color:var(--fg)}
+
+  .inner{max-width:980px; margin:0 auto; width:100%}
+  .eyebrow{
+    font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 18px;
+  }
+  h1{font-size:clamp(34px,5.2vw,68px); line-height:1.05; letter-spacing:-0.02em; margin:0 0 22px; font-weight:800}
+  h2{font-size:clamp(28px,4vw,48px); line-height:1.1; letter-spacing:-0.02em; margin:0 0 22px; font-weight:800}
+  p.lead{font-size:clamp(17px,1.7vw,21px); line-height:1.55; max-width:680px; margin:0 0 8px}
+  .dark p.lead{color:var(--fg-inverse-muted)}
+  .light p.lead, .subtle p.lead{color:var(--fg-muted)}
+
+  .num{
+    font-size:15px; font-weight:800; letter-spacing:.06em;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:40px; height:40px; border-radius:50%; margin-bottom:26px;
+    border:1.5px solid currentColor;
+  }
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:36px}
+  @media (max-width:760px){ .grid2{grid-template-columns:1fr} }
+  .col{
+    border:1px solid var(--border-dark); border-radius:4px; padding:26px 24px;
+  }
+  .light .col, .subtle .col{border-color:var(--border)}
+  .col h3{font-size:13px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin:0 0 16px; color:var(--fg-muted)}
+  .dark .col h3{color:var(--fg-inverse-muted)}
+  .col ul{margin:0; padding:0; list-style:none}
+  .col li{
+    font-size:16px; line-height:1.55; padding:10px 0 10px 22px; position:relative;
+    border-bottom:1px solid var(--border);
+  }
+  .dark .col li{border-color:var(--border-dark)}
+  .col li:last-child{border-bottom:none}
+  .col li::before{content:"—"; position:absolute; left:0; color:var(--accent)}
+  .col.you{border-color:var(--accent)}
+
+  .closing{
+    margin-top:32px; font-size:clamp(18px,2vw,22px); font-weight:600; max-width:680px;
+  }
+
+  .stats{display:flex; gap:clamp(32px,6vw,90px); margin-top:40px; flex-wrap:wrap}
+  .stat-n{font-size:clamp(40px,6vw,68px); font-weight:800; letter-spacing:-0.02em; color:var(--accent)}
+  .stat-l{font-size:15px; color:var(--fg-muted); max-width:220px; margin-top:6px}
+
+  .btnrow{display:flex; gap:14px; margin-top:36px; flex-wrap:wrap}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:15px; font-weight:700; text-decoration:none;
+    padding:15px 26px; border-radius:999px; transition:opacity .2s ease;
+  }
+  .btn:hover{opacity:.85}
+  .btn-primary{background:var(--accent); color:#fff}
+  .btn-ghost-dark{border:1.5px solid rgba(255,255,255,.55); color:#fff}
+  .btn-ghost-light{border:1.5px solid var(--border-strong,#d4cec0); color:var(--fg)}
+
+  .cover-mark{font-size:14px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:28px}
+  .scrollcue{
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--fg-inverse-muted); display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scrollcue .line{width:1px; height:34px; background:linear-gradient(var(--accent), transparent); animation:cue 1.8s ease-in-out infinite}
+  @keyframes cue{0%{opacity:.2} 50%{opacity:1} 100%{opacity:.2}}
+
+  .dotfield{
+    position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:radial-gradient(currentColor 1px, transparent 1px);
+    background-size:22px 22px; color:var(--border);
+  }
+  .dark .dotfield{color:rgba(255,255,255,.08)}
+  .cover .dotfield{color:rgba(255,255,255,.10)}
+
+  footer{
+    padding:60px clamp(24px,7vw,120px) 50px; background:var(--bg-inverse); color:var(--fg-inverse-muted);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+    font-size:14px;
+  }
+  footer a{text-decoration:none; color:#fff; font-weight:600}
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="word" href="/">GEN8</a>
+    <a class="cta js-calendly" href="#" target="_blank" rel="noopener">Book a call</a>
+  </div>
+
+  <nav class="dots" aria-hidden="true">
+    <button class="dot" data-i="0"></button>
+    <button class="dot" data-i="1"></button>
+    <button class="dot" data-i="2"></button>
+    <button class="dot" data-i="3"></button>
+    <button class="dot" data-i="4"></button>
+    <button class="dot" data-i="5"></button>
+    <button class="dot" data-i="6"></button>
+    <button class="dot" data-i="7"></button>
+    <button class="dot" data-i="8"></button>
+  </nav>
+
+  <section class="slide dark cover">
+    <div class="dotfield"></div>
+    <div class="inner">
+      <div class="cover-mark">GEN8 — Our Edge</div>
+      <h1>Design is where most portfolio&nbsp;companies burn runway they don't need to.</h1>
+      <p class="lead">A short brief for the investors who'd rather not find out the hard way.</p>
+    </div>
+    <div class="scrollcue"><span>Scroll</span><span class="line"></span></div>
+  </section>
+
+  <section class="slide light">
+    <div class="inner">
+      <div class="eyebrow">The problem</div>
+      <h2>Enterprise design and startup design are not the same job.</h2>
+      <p class="lead">Most designers — and most people hiring them — only know one of these two worlds.</p>
+      <div class="grid2">
+        <div class="col">
+          <h3>Inside a large company</h3>
+          <ul>
+            <li>A design system already exists</li>
+            <li>Dozens of designers to lean on</li>
+            <li>Process, precedent, and support built in</li>
+            <li>Someone else owns the roadmap</li>
+          </ul>
+        </div>
+        <div class="col you">
+          <h3>Inside your portfolio company</h3>
+          <ul>
+            <li>Nothing exists yet — it gets built from zero</li>
+            <li>One hire owns brand, product and speed at once</li>
+            <li>Ambiguity is the whole job</li>
+            <li>Every decision compounds fast, for better or worse</li>
+          </ul>
+        </div>
+      </div>
+      <div class="closing">Most design hires are trained for the left column. Your companies need the right one.</div>
+    </div>
+  </section>
+
+  <section class="slide dark">
+    <div class="dotfield"></div>
+    <div class="inner">
+      <div class="eyebrow">The cost</div>
+      <h2>A design mis-hire doesn't cost a salary. It costs a fundraising cycle.</h2>
+      <p class="lead">Every month spent onboarding the wrong designer — or managing one without a design background who can't tell the difference — is a month retention, activation and product-market-fit signals don't move. Those are the numbers the next round gets priced on.</p>
+    </div>
+  </section>
+
+  <section class="slide subtle">
+    <div class="inner">
+      <div class="eyebrow">Our edge</div>
+      <h2>Three things we do differently.</h2>
+      <p class="lead">Not theory — the specific mechanics that make design work for a startup's speed, not against it.</p>
+    </div>
+  </section>
+
+  <section class="slide light">
+    <div class="inner">
+      <span class="num">01</span>
+      <h2>We don't place a designer. We place a decision.</h2>
+      <p class="lead">Every engagement starts with our full senior team in the room — not one junior generalist hoping to figure it out. From there, we embed the single product designer best matched to your stage for the first stretch of the build (the shape differs for a seed-stage startup versus a scaling team).</p>
+      <p class="lead"><strong>Not any senior designer will do. Not a junior one either.</strong> Startup design is its own craft, and we've built a team fluent in it.</p>
+    </div>
+  </section>
+
+  <section class="slide dark">
+    <div class="dotfield"></div>
+    <div class="inner">
+      <span class="num">02</span>
+      <h2>We build the work — then we build what keeps building it.</h2>
+      <p class="lead">We ship the core product and brand design. Before we leave, we train AI agents on your product strategy and design DNA — so your team keeps producing on-brand work long after the engagement ends.</p>
+      <p class="lead">You don't re-buy design from scratch every quarter.</p>
+    </div>
+  </section>
+
+  <section class="slide light">
+    <div class="inner">
+      <span class="num">03</span>
+      <h2>We understand retention better than most product teams do.</h2>
+      <p class="lead">We built our own tool to find and interview true early adopters — the right way, not a generic survey. That's what lets us design onboarding and education that actually makes a product stick.</p>
+      <p class="lead">It gives you, and your board, the user insight that predicts retention before the metrics do.</p>
+    </div>
+  </section>
+
+  <section class="slide subtle">
+    <div class="inner">
+      <div class="eyebrow">Not theory</div>
+      <h2>This is the pattern across our portfolio.</h2>
+      <div class="stats">
+        <div>
+          <div class="stat-n">30+</div>
+          <div class="stat-l">start ups and scale ups we've worked with</div>
+        </div>
+        <div>
+          <div class="stat-n">$200M+</div>
+          <div class="stat-l">raised by those teams after we shipped</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide dark">
+    <div class="dotfield"></div>
+    <div class="inner">
+      <h2>Give your portfolio companies the design edge, not the design gamble.</h2>
+      <p class="lead">Send this to the founders you're backing — or book time with us directly.</p>
+      <div class="btnrow">
+        <a href="#" class="btn btn-primary js-calendly" target="_blank" rel="noopener">Book a call →</a>
+        <a href="mailto:hello@gen8design.com" class="btn btn-ghost-dark">hello@gen8design.com</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="yr"></span> GEN8</span>
+    <a href="/">gen8design.com</a>
+  </footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  var CALENDLY_URL = "https://calendly.com/gen8design/30min";
+  document.querySelectorAll('.js-calendly').forEach(function(a){
+    a.setAttribute('href', CALENDLY_URL);
+  });
+
+  var slides = Array.from(document.querySelectorAll('section.slide'));
+  var dots = Array.from(document.querySelectorAll('.dot'));
+
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      slides[+d.dataset.i].scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          var i = slides.indexOf(en.target);
+          dots.forEach(function(d,di){ d.classList.toggle('active', di===i); });
+        }
+      });
+    }, {threshold:0.6});
+    slides.forEach(function(s){ io.observe(s); });
+  }
+
+  window.addEventListener('keydown', function(e){
+    if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    var mid = window.innerHeight/2;
+    var current = 0;
+    slides.forEach(function(s,i){
+      var r = s.getBoundingClientRect();
+      if(r.top <= mid && r.bottom >= mid) current = i;
+    });
+    var next = e.key === 'ArrowDown' ? Math.min(current+1, slides.length-1) : Math.max(current-1, 0);
+    slides[next].scrollIntoView({behavior:'smooth'});
+    e.preventDefault();
+  });
+</script>
+</body>
+</html>
