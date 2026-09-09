@@ -17,11 +17,11 @@
     --accent:#ff5d1f; --accent-soft:#ffdab9;
   }
   *{box-sizing:border-box}
+  html{scroll-snap-type:y mandatory; scroll-behavior:smooth}
   html,body{margin:0;padding:0}
   body{
     font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
     background:var(--bg); color:var(--fg);
-    scroll-snap-type:y mandatory; overflow-y:scroll; height:100vh;
     -webkit-font-smoothing:antialiased;
   }
   ::selection{background:var(--accent);color:#fff}
