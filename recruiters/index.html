@@ -6,7 +6,7 @@
 <title>For Recruiters · GEN8</title>
 <meta name="description" content="Introduce GEN8 to your start up and scale up clients and earn 10% of every invoice, for as long as they stay." />
 <meta property="og:title" content="For Recruiters · GEN8" />
-<meta property="og:description" content="Your startup clients need design now. Get paid every month they get it." />
+<meta property="og:description" content="Introduce us once. Earn on every invoice after." />
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -178,6 +178,11 @@
   .trio .num{margin-bottom:18px}
   .trio h3{font-family:'Satoshi',ui-sans-serif,system-ui,sans-serif; font-size:22px; font-weight:700; margin:0 0 10px; letter-spacing:-0.01em}
   .trio p{font-size:16px; line-height:1.55; margin:0; color:var(--fg-muted)}
+
+  /* Reading-paced reveal */
+  .anim .rv{opacity:0; transform:translateY(14px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1)}
+  .anim .slide.seen .rv{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){ .anim .rv{opacity:1; transform:none; transition:none} }
 </style>
 </head>
 <body>
@@ -193,7 +198,7 @@
     <div class="dotfield"></div>
     <div class="inner">
       <div class="cover-mark">GEN8 · For recruiters</div>
-      <h1>Your startup clients need design now. Get paid every month they&nbsp;get&nbsp;it.</h1>
+      <h1>Introduce us once. Earn on every invoice&nbsp;after.</h1>
       <p class="lead">A short brief for recruiters who place design talent into start ups and scale ups.</p>
     </div>
     <div class="scrollcue"><span>Scroll</span><span class="line"></span></div>
@@ -400,6 +405,26 @@
     slides[next].scrollIntoView({behavior:'smooth'});
     e.preventDefault();
   });
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.documentElement.classList.add('anim');
+    var SEL = '.cover-mark,.eyebrow,h1,h2,p.lead,.col h3,.col li,.closing,.step,.trio>div,.stats>div,.pay,.pillar-visual,.btnrow';
+    var all = Array.from(document.querySelectorAll('section.slide'));
+    all.forEach(function(s){
+      var t = 0.15;
+      s.querySelectorAll(SEL).forEach(function(el){
+        el.classList.add('rv');
+        el.style.transitionDelay = t.toFixed(2) + 's';
+        var w = (el.textContent || '').trim().split(/\s+/).length;
+        t += Math.min(1.6, Math.max(0.3, w * 0.08));
+      });
+    });
+    var o = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); o.unobserve(e.target); } });
+    }, {threshold:0.3});
+    all.forEach(function(s){ o.observe(s); });
+  })();
 </script>
 </body>
 </html>
