@@ -147,6 +147,11 @@
     font-size:14px;
   }
   footer a{text-decoration:none; color:#fff; font-weight:600}
+
+  /* Reading-paced reveal */
+  .anim .rv{opacity:0; transform:translateY(14px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1)}
+  .anim .slide.seen .rv{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){ .anim .rv{opacity:1; transform:none; transition:none} }
 </style>
 </head>
 <body>
@@ -342,6 +347,26 @@
     slides[next].scrollIntoView({behavior:'smooth'});
     e.preventDefault();
   });
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.documentElement.classList.add('anim');
+    var SEL = '.cover-mark,.eyebrow,h1,h2,p.lead,.col h3,.col li,.closing,.step,.trio>div,.stats>div,.pay,.pillar-visual,.btnrow';
+    var all = Array.from(document.querySelectorAll('section.slide'));
+    all.forEach(function(s){
+      var t = 0.15;
+      s.querySelectorAll(SEL).forEach(function(el){
+        el.classList.add('rv');
+        el.style.transitionDelay = t.toFixed(2) + 's';
+        var w = (el.textContent || '').trim().split(/\s+/).length;
+        t += Math.min(1.6, Math.max(0.3, w * 0.08));
+      });
+    });
+    var o = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('seen'); o.unobserve(e.target); } });
+    }, {threshold:0.3});
+    all.forEach(function(s){ o.observe(s); });
+  })();
 </script>
 </body>
 </html>
