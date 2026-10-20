@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>For Recruiters · GEN8</title>
+<meta name="description" content="Introduce GEN8 to your start up and scale up clients and earn 10% of every invoice, for as long as they stay." />
+<meta property="og:title" content="For Recruiters · GEN8" />
+<meta property="og:description" content="Your startup clients need design now. Get paid every month they get it." />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
+<style>
+  :root{
+    --bg:#faf8f4; --bg-subtle:#f5f2ec; --bg-card:#f0ede5; --bg-inverse:#0b0b0c;
+    --fg:#09090b; --fg-muted:#71717a; --fg-inverse:#ffffff; --fg-inverse-muted:rgba(255,255,255,.62);
+    --border:#e4e0d6; --border-dark:rgba(255,255,255,.14);
+    --accent:#ff4d06; --accent-soft:#ffdab9;
+  }
+  *{box-sizing:border-box}
+  html{scroll-snap-type:y mandatory; scroll-behavior:smooth}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Libre Franklin',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg); color:var(--fg);
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent);color:#fff}
+  a{color:inherit}
+
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px clamp(20px,4vw,56px);
+    mix-blend-mode:difference;
+  }
+  .topbar .word{font-weight:800; font-size:16px; letter-spacing:.02em; color:#fff; text-decoration:none}
+  .topbar .cta{
+    font-size:13px; font-weight:600; color:#fff; text-decoration:none;
+    border:1px solid rgba(255,255,255,.7); padding:8px 16px; border-radius:999px;
+  }
+
+  .dots{
+    position:fixed; right:clamp(14px,2.4vw,32px); top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:10px; z-index:50;
+  }
+  .dot{
+    width:7px; height:7px; border-radius:50%; background:rgba(120,120,120,.35);
+    border:none; padding:0; cursor:pointer; transition:transform .25s ease, background .25s ease;
+  }
+  .dot.active{background:var(--accent); transform:scale(1.7)}
+
+  section.slide{
+    scroll-snap-align:start;
+    min-height:100vh; width:100%;
+    display:flex; align-items:center;
+    position:relative;
+    padding:120px clamp(24px,7vw,120px) 80px;
+  }
+  .slide.dark{background:var(--bg-inverse); color:var(--fg-inverse)}
+  .slide.light{background:var(--bg); color:var(--fg)}
+  .slide.subtle{background:var(--bg-subtle); color:var(--fg)}
+
+  .inner{max-width:980px; margin:0 auto; width:100%}
+  .pillar-grid{display:grid; grid-template-columns:1fr 200px; gap:56px; align-items:center}
+  .pillar-visual{width:170px}
+  .pillar-visual svg, .pillar-visual img{width:100%; height:auto; display:block; color:currentColor}
+  .pillar-visual .lnk{stroke:var(--accent); opacity:1}
+  @media (max-width:900px){
+    .pillar-grid{grid-template-columns:1fr}
+    .pillar-visual{width:130px; margin:28px auto 0}
+  }
+  .eyebrow{
+    font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 18px;
+  }
+  h1{font-family:'Satoshi',ui-sans-serif,system-ui,sans-serif; font-size:clamp(34px,5.2vw,68px); line-height:1.05; letter-spacing:-0.02em; margin:0 0 22px; font-weight:700}
+  h2{font-family:'Satoshi',ui-sans-serif,system-ui,sans-serif; font-size:clamp(28px,4vw,48px); line-height:1.1; letter-spacing:-0.02em; margin:0 0 22px; font-weight:700}
+  p.lead{font-size:clamp(17px,1.7vw,21px); line-height:1.55; max-width:680px; margin:0 0 8px}
+  .dark p.lead{color:var(--fg-inverse-muted)}
+  .light p.lead, .subtle p.lead{color:var(--fg-muted)}
+
+  .num{
+    font-size:15px; font-weight:800; letter-spacing:.06em;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:40px; height:40px; border-radius:50%; margin-bottom:26px;
+    border:1.5px solid currentColor;
+  }
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:36px}
+  @media (max-width:760px){ .grid2{grid-template-columns:1fr} }
+  .col{
+    border:1px solid var(--border-dark); border-radius:4px; padding:26px 24px;
+  }
+  .light .col, .subtle .col{border-color:var(--border)}
+  .col h3{font-size:13px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin:0 0 16px; color:var(--fg-muted)}
+  .dark .col h3{color:var(--fg-inverse-muted)}
+  .col ul{margin:0; padding:0; list-style:none}
+  .col li{
+    font-size:16px; line-height:1.55; padding:10px 0 10px 22px; position:relative;
+    border-bottom:1px solid var(--border);
+  }
+  .dark .col li{border-color:var(--border-dark)}
+  .col li:last-child{border-bottom:none}
+  .col li::before{content:"—"; position:absolute; left:0; color:var(--accent)}
+  .col.you{border-color:var(--accent)}
+
+  .closing{
+    margin-top:32px; font-size:clamp(18px,2vw,22px); font-weight:600; max-width:680px;
+  }
+
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:40px}
+  @media (max-width:760px){ .steps{grid-template-columns:1fr} }
+  .step{border-top:1.5px solid var(--border-dark); padding-top:22px}
+  .step .when{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px}
+  .step h3{font-family:'Satoshi',ui-sans-serif,system-ui,sans-serif; font-size:22px; font-weight:700; margin:0 0 10px; letter-spacing:-0.01em}
+  .step p{font-size:16px; line-height:1.55; margin:0; color:var(--fg-inverse-muted)}
+
+  .stats{display:flex; gap:clamp(32px,6vw,90px); margin-top:40px; flex-wrap:wrap}
+  .stat-n{font-size:clamp(40px,6vw,68px); font-weight:800; letter-spacing:-0.02em; color:var(--accent)}
+  .stat-l{font-size:15px; color:var(--fg-muted); max-width:220px; margin-top:6px}
+
+  .btnrow{display:flex; gap:14px; margin-top:36px; flex-wrap:wrap}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:15px; font-weight:700; text-decoration:none;
+    padding:15px 26px; border-radius:999px; transition:opacity .2s ease;
+  }
+  .btn:hover{opacity:.85}
+  .btn-primary{background:var(--accent); color:#fff}
+  .btn-ghost-dark{border:1.5px solid rgba(255,255,255,.55); color:#fff}
+  .btn-ghost-light{border:1.5px solid var(--border-strong,#d4cec0); color:var(--fg)}
+
+  .cover-mark{font-size:14px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:28px}
+  .scrollcue{
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--fg-inverse-muted); display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scrollcue .line{width:1px; height:34px; background:linear-gradient(var(--accent), transparent); animation:cue 1.8s ease-in-out infinite}
+  @keyframes cue{0%{opacity:.2} 50%{opacity:1} 100%{opacity:.2}}
+
+  .dotfield{
+    position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:radial-gradient(currentColor 1px, transparent 1px);
+    background-size:22px 22px; color:var(--border);
+  }
+  .dark .dotfield{color:rgba(255,255,255,.08)}
+  .cover .dotfield{color:rgba(255,255,255,.10)}
+
+  footer{
+    padding:60px clamp(24px,7vw,120px) 50px; background:var(--bg-inverse); color:var(--fg-inverse-muted);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+    font-size:14px;
+  }
+  footer a{text-decoration:none; color:#fff; font-weight:600}
+
+  .steps.on-light .step{border-color:var(--border)}
+  .steps.on-light .step p{color:var(--fg-muted)}
+
+  .pay{margin-top:44px; display:grid; gap:26px; max-width:860px}
+  .pay-row{display:grid; grid-template-columns:150px 1fr; gap:20px; align-items:end}
+  .pay-lbl{font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-inverse-muted); padding-bottom:4px}
+  .pay-lbl.hot{color:var(--accent)}
+  .bars{display:grid; grid-template-columns:repeat(12,1fr); gap:6px; align-items:end; height:90px; border-bottom:1px solid var(--border-dark)}
+  .bar{background:var(--border-dark); height:0; transition:height .7s cubic-bezier(.2,.7,.2,1)}
+  .bar.hot{background:var(--accent)}
+  .bar.one{background:rgba(255,255,255,.55)}
+  .in .bar{height:var(--h)}
+  .pay-note{font-size:13px; color:var(--fg-inverse-muted); margin-top:10px; letter-spacing:.04em}
+  @media (max-width:600px){ .pay-row{grid-template-columns:1fr; gap:8px} }
+  @media (prefers-reduced-motion:reduce){ .bar{transition:none} }
+
+  .trio{display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:40px}
+  @media (max-width:760px){ .trio{grid-template-columns:1fr} }
+  .trio .num{margin-bottom:18px}
+  .trio h3{font-family:'Satoshi',ui-sans-serif,system-ui,sans-serif; font-size:22px; font-weight:700; margin:0 0 10px; letter-spacing:-0.01em}
+  .trio p{font-size:16px; line-height:1.55; margin:0; color:var(--fg-muted)}
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a class="word" href="/">GEN8</a>
+    <a class="cta js-calendly" href="#" target="_blank" rel="noopener">Book a call</a>
+  </div>
+
+  <nav class="dots" aria-hidden="true"></nav>
+
+  <section class="slide dark cover">
+    <div class="dotfield"></div>
+    <div class="inner">
+      <div class="cover-mark">GEN8 · For recruiters</div>
+      <h1>Your startup clients need design now. Get paid every month they&nbsp;get&nbsp;it.</h1>
+      <p class="lead">A short brief for recruiters who place design talent into start ups and scale ups.</p>
+    </div>
+    <div class="scrollcue"><span>Scroll</span><span class="line"></span></div>
+  </section>
+
+  <section class="slide light">
+    <div class="inner">
+      <div class="eyebrow">The problem</div>
+      <h2>Startup design roles are slow, risky placements.</h2>
+      <p class="lead">You know the pattern. The founder needs design yesterday, but the perm search drags on.</p>
+      <div class="grid2">
+        <div class="col">
+          <h3>A typical perm design search</h3>
+          <ul>
+            <li>The role sits open for months</li>
+            <li>The founder isn't sure what they actually need</li>
+            <li>Budgets freeze or shift mid-process</li>
+            <li>A mis-hire lands back on your rebate</li>
+          </ul>
+        </div>
+        <div class="col you">
+          <h3>When you lead with GEN8</h3>
+          <ul>
+            <li>Senior design starts in days, not months</li>
+            <li>The client sees progress straight away</li>
+            <li>No rebate exposure on your side</li>
+            <li>You stay the adviser who solved it</li>
+          </ul>
+        </div>
+      </div>
+      <div class="closing">Same client. Better outcome. Paid for longer.</div>
+    </div>
+  </section>
+
+  <section class="slide dark" id="pay">
+    <div class="dotfield"></div>
+    <div class="inner">
+      <div class="eyebrow">Your commission</div>
+      <h2>10% of every invoice. For as long as they stay.</h2>
+      <p class="lead">A placement pays you once. A GEN8 client pays you every month we work with them.</p>
+      <div class="pay">
+        <div class="pay-row">
+          <div class="pay-lbl">Perm placement</div>
+          <div class="bars">
+            <span class="bar one" style="--h:100%"></span>
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          </div>
+        </div>
+        <div class="pay-row">
+          <div class="pay-lbl hot">GEN8 client</div>
+          <div class="bars">
+            <span class="bar hot" style="--h:28%"></span><span class="bar hot" style="--h:28%"></span><span class="bar hot" style="--h:28%"></span>
+            <span class="bar hot" style="--h:28%"></span><span class="bar hot" style="--h:28%"></span><span class="bar hot" style="--h:28%"></span>
+            <span class="bar hot" style="--h:28%"></span><span class="bar hot" style="--h:28%"></span><span class="bar hot" style="--h:28%"></span>
+            <span class="bar hot" style="--h:28%"></span><span class="bar hot" style="--h:28%"></span><span class="bar hot" style="--h:28%"></span>
+          </div>
+        </div>
+        <div class="pay-note">One intro. Paid month after month, with no rebate clock running.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide subtle">
+    <div class="inner">
+      <div class="eyebrow">How it works</div>
+      <h2>You introduce. We deliver. You earn.</h2>
+      <div class="steps on-light">
+        <div class="step">
+          <div class="when">01 · Intro</div>
+          <h3>Push us first</h3>
+          <p>When a start up or scale up asks you for a designer, introduce GEN8 alongside or ahead of the perm search.</p>
+        </div>
+        <div class="step">
+          <div class="when">02 · Deliver</div>
+          <h3>We do the work</h3>
+          <p>We pitch, scope and ship. Our full senior team starts, then embeds the specialist matched to their stage.</p>
+        </div>
+        <div class="step">
+          <div class="when">03 · Earn</div>
+          <h3>You get paid</h3>
+          <p>10% of every invoice we raise with that client, for the life of the relationship.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide light">
+    <div class="inner">
+      <div class="eyebrow">Why clients say yes</div>
+      <h2>An easy intro, because it's an easy yes.</h2>
+      <div class="trio">
+        <div>
+          <span class="num">01</span>
+          <h3>Senior from day one</h3>
+          <p>A pod of senior product designers and PMs, fluent in startup speed. No junior generalists.</p>
+        </div>
+        <div>
+          <span class="num">02</span>
+          <h3>Onboarding and retention specialists</h3>
+          <p>We design for activation and retention, the numbers their next round gets priced on.</p>
+        </div>
+        <div>
+          <span class="num">03</span>
+          <h3>Design that stays</h3>
+          <p>We train AI agents on their brand and product, so on-brand work keeps shipping after we leave.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide dark">
+    <div class="dotfield"></div>
+    <div class="inner">
+      <div class="eyebrow">Better outcomes for your desk</div>
+      <h2>We don't compete for your perm roles. We make them stick.</h2>
+      <p class="lead">GEN8 isn't an agency and doesn't place people. When your client is ready to hire permanently, they know what good design looks like and what the role really needs.</p>
+      <p class="lead">A sharper brief means a better placement, and a placement that lasts past the rebate period.</p>
+    </div>
+  </section>
+
+  <section class="slide subtle">
+    <div class="inner">
+      <div class="eyebrow">Not theory</div>
+      <h2>The teams you'd be introducing us to are in good company.</h2>
+      <div class="stats">
+        <div>
+          <div class="stat-n">30+</div>
+          <div class="stat-l">start ups and scale ups we've worked with</div>
+        </div>
+        <div>
+          <div class="stat-n">$200M+</div>
+          <div class="stat-l">raised by those teams after we shipped</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide dark">
+    <div class="dotfield"></div>
+    <div class="inner">
+      <h2>Push us first.</h2>
+      <p class="lead">Next time a start up or scale up asks you for a designer, introduce GEN8. Book 30 minutes and we'll set up your referral terms.</p>
+      <div class="btnrow">
+        <a href="#" class="btn btn-primary js-calendly" target="_blank" rel="noopener">Book a call →</a>
+        <a href="mailto:hello@gen8design.com" class="btn btn-ghost-dark">hello@gen8design.com</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="yr"></span> GEN8</span>
+    <a href="/">gen8design.com</a>
+  </footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  var CALENDLY_URL = "https://calendly.com/gen8design/30min";
+  document.querySelectorAll('.js-calendly').forEach(function(a){
+    a.setAttribute('href', CALENDLY_URL);
+  });
+
+  var slides = Array.from(document.querySelectorAll('section.slide'));
+  var nav = document.querySelector('.dots');
+  slides.forEach(function(_, i){
+    var b = document.createElement('button');
+    b.className = 'dot'; b.dataset.i = i; nav.appendChild(b);
+  });
+  var dots = Array.from(document.querySelectorAll('.dot'));
+
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){
+      slides[+d.dataset.i].scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          var i = slides.indexOf(en.target);
+          dots.forEach(function(d,di){ d.classList.toggle('active', di===i); });
+        }
+      });
+    }, {threshold:0.6});
+    slides.forEach(function(s){ io.observe(s); });
+  }
+
+  var pay = document.getElementById('pay');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) pay.classList.add('in'); }); }, {threshold:0.4}).observe(pay);
+  } else { pay.classList.add('in'); }
+
+  window.addEventListener('keydown', function(e){
+    if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    var mid = window.innerHeight/2;
+    var current = 0;
+    slides.forEach(function(s,i){
+      var r = s.getBoundingClientRect();
+      if(r.top <= mid && r.bottom >= mid) current = i;
+    });
+    var next = e.key === 'ArrowDown' ? Math.min(current+1, slides.length-1) : Math.max(current-1, 0);
+    slides[next].scrollIntoView({behavior:'smooth'});
+    e.preventDefault();
+  });
+</script>
+</body>
+</html>
